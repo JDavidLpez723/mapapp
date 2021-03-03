@@ -28,14 +28,5 @@
         android:id="@+id/thirdFragment"
         android:name="com.example.map.ThirdFragment"
         android:label="fragment_third"
-        tools:layout="@layout/fragment_third" >
-        <action
-            android:id="@+id/action_ThirdFragment_to_LoginFragment"
-            app:destination="@id/loginFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/loginFragment"
-        android:name="com.example.map.ui.login.LoginFragment"
-        android:label="fragment_login"
-        tools:layout="@layout/fragment_login" />
+        tools:layout="@layout/fragment_third" />
 </navigation>
