@@ -24,8 +24,8 @@ class ThirdFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        view.findViewById<Button>(R.id.button_third).setOnClickListener {
-            findNavController().navigate(R.id.action_ThirdFragment_to_LoginFragment)
-        }
+        //view.findViewById<Button>(R.id.button_third).setOnClickListener {
+        //    findNavController().navigate(R.id.action_ThirdFragment_to_LoginFragment)
+        //}
     }
 }
