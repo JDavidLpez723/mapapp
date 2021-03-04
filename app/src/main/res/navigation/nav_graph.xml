@@ -37,5 +37,13 @@
         android:id="@+id/fourthFragment"
         android:name="com.example.map.view.FourthFragment"
         android:label="fragment_fourth"
-        tools:layout="@layout/fragment_fourth" />
+        tools:layout="@layout/fragment_fourth" >
+        <action
+            android:id="@+id/action_fourthFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.map.view.HomeFragment"
+        android:label="HomeFragment" />
 </navigation>
