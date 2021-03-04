@@ -30,8 +30,8 @@ class HomeFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        var textToReplace: String? = "Asas"
-        textToReplace = viewModel.getEx()
+        var textToReplace: String? = "Some User data"
+        //textToReplace = viewModel.getEx()
 
         view.findViewById<TextView>(R.id.textView).setText(textToReplace)
 //        viewModel.getUser(0)?.email
