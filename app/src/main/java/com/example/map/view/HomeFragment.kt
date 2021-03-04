@@ -15,7 +15,7 @@ import com.example.map.viewmodel.MapViewModelFactory
 class HomeFragment: Fragment() {
 
 //    private lateinit var binding: FragmentFirstBinding
-    private val viewModel: MapViewModel by viewModels() {
+    private val viewModel: MapViewModel by viewModels {
         val app = activity?.application as MapApp
         MapViewModelFactory(app.database)
     }
@@ -30,10 +30,8 @@ class HomeFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        var textToReplace: String? = "Some User data"
-        //textToReplace = viewModel.getEx()
 
-        view.findViewById<TextView>(R.id.textView).setText(textToReplace)
+        view.findViewById<TextView>(R.id.textView).setText(viewModel.getUser(1)?.email)
 //        viewModel.getUser(0)?.email
     }
 }

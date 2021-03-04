@@ -16,10 +16,12 @@ class MapViewModel(private val database: MapDatabase): ViewModel() {
         }
     }
 
-    fun getEx(): String? = "Example"
-
     fun getUser(i: Int): User? {
-        var u : User? = User(id = 3, email = "aa", password = "a")
+        var u : User? = null
+        viewModelScope.launch(Dispatchers.IO) {
+            u = database.userDao.getUser(i)
+        }
+//        var u : User? = User(id = 3, email = "aaasa", password = "a")
         return u
     }
 }
