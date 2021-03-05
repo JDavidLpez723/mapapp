@@ -31,7 +31,8 @@ class HomeFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        view.findViewById<TextView>(R.id.textView).setText(viewModel.getUser(1)?.email)
-//        viewModel.getUser(0)?.email
+//        view.findViewById<TextView>(R.id.textView).setText(viewModel.getUser(0)?.email)
+        view.findViewById<TextView>(R.id.textView).setText(viewModel.getDataExample())
+
     }
 }

@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 
-@Entity(tableName = "user_table")
+@Entity(tableName = "node_table")
 data class Node(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,

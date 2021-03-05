@@ -10,6 +10,8 @@ import androidx.room.TypeConverters
 abstract class MapDatabase: RoomDatabase() {
     abstract val userDao: UserDao
 
+    //Companion: object shared by all instances of a class.
+    //similar to "static" in Java.
     companion object{
         @Volatile
         private var INSTANCE: MapDatabase? = null

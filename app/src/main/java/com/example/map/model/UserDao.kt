@@ -11,6 +11,8 @@ interface UserDao {
     suspend fun addUser(user: User)
     @Query("SELECT * FROM user_table WHERE id = :id")
     suspend fun getUser(id: Int): User?
+    @Query("SELECT * FROM user_table")
+    suspend fun fetchUsers(): List<User>
     @Update
     suspend fun update(user: User)
 

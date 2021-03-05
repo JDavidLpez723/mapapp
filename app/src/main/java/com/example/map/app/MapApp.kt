@@ -12,6 +12,8 @@ import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+//Application: Class shared among every fragment and activity
+//it is where the db is stored
 class MapApp: Application() {
     val database by lazy { MapDatabase.getInstance(this)}
     override fun onCreate() {

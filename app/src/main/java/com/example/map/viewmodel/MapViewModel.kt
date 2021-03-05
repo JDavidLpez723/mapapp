@@ -10,20 +10,29 @@ import kotlinx.coroutines.launch
 
 class MapViewModel(private val database: MapDatabase): ViewModel() {
 
+    private var u: User? = null
+    private var userList = listOf<User>()
+
     init {
         viewModelScope.launch(Dispatchers.IO) {
-
+            u = database.userDao.getUser(0)
+            userList = database.userDao.fetchUsers()
         }
+        println("User List:")
+        println(userList)
     }
 
     fun getUser(i: Int): User? {
-        var u : User? = null
-        viewModelScope.launch(Dispatchers.IO) {
-            u = database.userDao.getUser(i)
-        }
+//        var u : User? = null
+//        viewModelScope.launch(Dispatchers.IO) {
+//            u = database.userDao.getUser(i)
+//        }
 //        var u : User? = User(id = 3, email = "aaasa", password = "a")
+        println(u)
         return u
     }
+
+    fun getDataExample(): String = "DataExampleFromVIewModel"
 }
 
 class MapViewModelFactory(private val database: MapDatabase): ViewModelProvider.Factory {
