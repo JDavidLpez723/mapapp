@@ -7,11 +7,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.canonicalexamples.mapapp.model.MapDatabase
 import com.canonicalexamples.mapapp.model.Node
-import com.canonicalexamples.mapapp.model.TodoService
+import com.canonicalexamples.mapapp.model.TileService
 import com.canonicalexamples.mapapp.util.Event
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import retrofit2.await
 import kotlin.math.*
 
 /**
@@ -32,9 +31,11 @@ import kotlin.math.*
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-class MapViewModel(private val database: MapDatabase, private val webservice: TodoService): ViewModel() {
+class MapViewModel(private val database: MapDatabase, private val webservice: TileService): ViewModel() {
     private val _navigate: MutableLiveData<Event<Boolean>> = MutableLiveData()
     val navigate: LiveData<Event<Boolean>> = _navigate
+    private val _open_node: MutableLiveData<Event<Boolean>> = MutableLiveData()
+    val open_node: LiveData<Event<Boolean>> = _open_node
     private var nodesList = listOf<Node>()
     data class Item(val name: String)
 
@@ -48,6 +49,9 @@ class MapViewModel(private val database: MapDatabase, private val webservice: To
 
     val numberOfItems: Int
         get() = nodesList.count()
+
+    //
+
 
     //Button for adding a new node
     fun addButtonClicked() {
@@ -70,8 +74,8 @@ class MapViewModel(private val database: MapDatabase, private val webservice: To
             val todo = webservice.getTodo(n).await()
             println("todo: ${todo.title}")
         }*/
-
         itemSelected = n
+        _open_node.value = Event(true)
 
     }
 
@@ -99,7 +103,7 @@ class MapViewModel(private val database: MapDatabase, private val webservice: To
 
 }
 
-class TeasListViewModelFactory(private val database: MapDatabase, private val webservice: TodoService): ViewModelProvider.Factory {
+class TeasListViewModelFactory(private val database: MapDatabase, private val webservice: TileService): ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(MapViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")

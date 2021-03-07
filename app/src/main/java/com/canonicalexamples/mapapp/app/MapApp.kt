@@ -3,7 +3,7 @@ package com.canonicalexamples.mapapp.app
 import android.app.Application
 import com.canonicalexamples.mapapp.model.MapDatabase
 import com.canonicalexamples.mapapp.model.Node
-import com.canonicalexamples.mapapp.model.TodoService
+import com.canonicalexamples.mapapp.model.TileService
 import com.google.gson.GsonBuilder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -34,9 +34,9 @@ class MapApp: Application() {
     val database by lazy { MapDatabase.getInstance(this) }
     val webservice by lazy {
         Retrofit.Builder()
-            .baseUrl("https://jsonplaceholder.typicode.com/")
+            .baseUrl("https://a.tile.openstreetmap.org/")
             .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
-            .build().create(TodoService::class.java)
+            .build().create(TileService::class.java)
     }
     override fun onCreate() {
         super.onCreate()

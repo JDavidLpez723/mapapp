@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.canonicalexamples.mapapp.R
 import com.canonicalexamples.mapapp.app.MapApp
@@ -40,6 +41,13 @@ class NodesListFragment : Fragment() {
             if (navigate) {
                 findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
             }
+        }
+
+        viewModel.open_node.observeEvent(viewLifecycleOwner) { open_node ->
+            if(open_node){
+                findNavController().navigate(R.id.action_FirstFragment_to_nodeFragment)
+            }
+
         }
     }
 }

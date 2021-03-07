@@ -1,9 +1,5 @@
 package com.canonicalexamples.mapapp.model
 
-import retrofit2.Call
-import retrofit2.http.GET
-import retrofit2.http.Path
-
 /**
  * 20210218. Initial version created by jorge
  * for a Canonical Examples training.
@@ -22,7 +18,8 @@ import retrofit2.http.Path
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-interface TodoService {
-    @GET("/todos/{id}")
-    fun getTodo(@Path(value = "id") id: Int): Call<Todo>
-}
+data class Tile(
+    val id: Int = 0,
+    val title: String = "",
+    val completed: Boolean = false
+)

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.canonicalexamples.mapapp.R
 import com.canonicalexamples.mapapp.app.MapApp
 import com.canonicalexamples.mapapp.databinding.FragmentNodeBinding
@@ -24,6 +25,8 @@ class NodeFragment: Fragment(){
     ): View? {
         binding = FragmentNodeBinding.inflate(inflater, container, false)
         println("Hola soy Node fragment")
+        //binding = FragmentNodeBinding.bind()
+        //return inflater.inflate(R.layout.fragment_node, container, false)
         return binding.root
     }
 
@@ -37,7 +40,10 @@ class NodeFragment: Fragment(){
         println(viewModel.itemSelected)
         //binding.titleNode.setText(viewModel.getSelectedNode().tag)
         println("Node opened:")
-        //println(viewModel.getSelectedNode().toString())
+        binding.buttonBack.setOnClickListener{
+            findNavController().navigate(R.id.action_nodeFragment_to_FirstFragment)
+        }
+
     }
 
 }

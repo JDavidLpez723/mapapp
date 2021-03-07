@@ -4,9 +4,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.canonicalexamples.mapapp.R
 import com.canonicalexamples.mapapp.databinding.ItemNodeBinding
+import com.canonicalexamples.mapapp.util.observeEvent
 import com.canonicalexamples.mapapp.viewmodels.MapViewModel
 
 /**
@@ -41,8 +43,10 @@ class NodesListAdapter(private val viewModel: MapViewModel): RecyclerView.Adapte
             println("Layout:"+layoutPosition)
             viewModel.onClickItem(layoutPosition)
             //Move to Node Fragment
+
+
             //v?.rootView?.findNavController()?.navigate(R.id.action_FirstFragment_to_nodeFragment)
-            v?.findNavController()?.navigate(R.id.action_FirstFragment_to_nodeFragment)
+            //v?.findNavController()?.navigate(R.id.action_FirstFragment_to_nodeFragment)
 
             //print(adapterPosition)
         }

@@ -23,7 +23,7 @@ import kotlinx.coroutines.launch
 class SecondFragment : Fragment() {
 
     private val viewModel: MapViewModel by viewModels {
-        val app = activity?.application as MapApp
+        val app = MapApp()
         TeasListViewModelFactory(app.database, app.webservice)
     }
 
