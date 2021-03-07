@@ -44,9 +44,9 @@ class MapApp: Application() {
         CoroutineScope(Dispatchers.IO + SupervisorJob()).launch {
             database.clearAllTables()
             database.nodeDao.apply {
-                this.create(node = Node(id=0, x=0.0, y=0.0))
-                this.create(node = Node(id=1, x=5.0, y=4.0, tag="TAg2"))
-                this.create(node = Node(id=2, x=8.0, y=-20.0, tag="DAmn tag"))
+                this.create(node = Node(id=0, x=0.0, y=0.0, tag="Mi Casa"))
+                this.create(node = Node(id=1, x=5.0, y=4.0, tag="Mi trabajo"))
+                this.create(node = Node(id=2, x=8.0, y=-20.0, tag="Parke"))
 //                this.create(tea = Tea(id = 0, name = "Oolong", rating = 1))
 //                this.create(tea = Tea(id = 1, name = "Pu erh", rating = 1))
 //                this.create(tea = Tea(id = 2, name = "Green tea", rating = 1))

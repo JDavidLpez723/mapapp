@@ -22,10 +22,7 @@ class NodesListFragment : Fragment() {
         TeasListViewModelFactory(app.database, app.webservice)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         binding = FragmentNodesListBinding.inflate(inflater, container, false)
         return binding.root
@@ -34,9 +31,7 @@ class NodesListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-
-        binding.recyclerView.adapter = TeasListAdapter(viewModel = viewModel)
+        binding.recyclerView.adapter = NodesListAdapter(viewModel = viewModel)
         binding.fab.setOnClickListener {
             viewModel.addButtonClicked()
         }

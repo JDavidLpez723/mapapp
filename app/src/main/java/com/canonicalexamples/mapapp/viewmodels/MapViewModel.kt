@@ -38,6 +38,8 @@ class MapViewModel(private val database: MapDatabase, private val webservice: To
     private var nodesList = listOf<Node>()
     data class Item(val name: String)
 
+    var itemSelected: Int = 0
+
     init {
         viewModelScope.launch(Dispatchers.IO) {
             nodesList = database.nodeDao.fetchNodes()
@@ -47,18 +49,30 @@ class MapViewModel(private val database: MapDatabase, private val webservice: To
     val numberOfItems: Int
         get() = nodesList.count()
 
+    //Button for adding a new node
     fun addButtonClicked() {
         _navigate.value = Event(true)
+        viewModelScope.launch(Dispatchers.IO) {
+            database.nodeDao.create(node = Node(x=800.0, y=-20.0, tag="tag"))
+            //Update Nodes List
+            //nodesList = database.nodeDao.fetchNodes()
+        }
     }
 
     fun getItem(n: Int) = Item(name = nodesList[n].x.toString() + ", " + nodesList[n].y.toString())
+    fun getNode(i: Int): Node = nodesList[i]
+    fun getSelectedNode() = nodesList[itemSelected]
 
+    //When an item of the adapter list has been clicked:
     fun onClickItem(n: Int) {
         println("Item $n clicked")
-        viewModelScope.launch(Dispatchers.IO) {
+        /*viewModelScope.launch(Dispatchers.IO) {
             val todo = webservice.getTodo(n).await()
             println("todo: ${todo.title}")
-        }
+        }*/
+
+        itemSelected = n
+
     }
 
     fun getXYTile(lat : Double, lon: Double, zoom : Int) : Pair<Int, Int> {
