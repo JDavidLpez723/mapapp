@@ -34,6 +34,8 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
+    apply plugin: "androidx.navigation.safeargs"
 }
 
 dependencies {
@@ -52,6 +54,7 @@ dependencies {
     implementation 'androidx.room:room-ktx:2.2.6'
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.picasso:picasso:2.71828'
     kapt 'androidx.room:room-compiler:2.2.6'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

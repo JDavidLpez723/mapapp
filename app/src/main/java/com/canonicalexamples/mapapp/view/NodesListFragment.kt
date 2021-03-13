@@ -6,21 +6,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.canonicalexamples.mapapp.R
 import com.canonicalexamples.mapapp.app.MapApp
 import com.canonicalexamples.mapapp.databinding.FragmentNodesListBinding
 import com.canonicalexamples.mapapp.util.observeEvent
-import com.canonicalexamples.mapapp.viewmodels.MapViewModel
-import com.canonicalexamples.mapapp.viewmodels.TeasListViewModelFactory
+import com.canonicalexamples.mapapp.viewmodels.NodesListViewModel
+import com.canonicalexamples.mapapp.viewmodels.NodesListViewModelFactory
 
 class NodesListFragment : Fragment() {
 
     private lateinit var binding: FragmentNodesListBinding
-    private val viewModel: MapViewModel by viewModels {
+    private val viewModel: NodesListViewModel by viewModels {
         val app = activity?.application as MapApp
-        TeasListViewModelFactory(app.database, app.webservice)
+        NodesListViewModelFactory(app.database, app.webservice)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -37,6 +36,12 @@ class NodesListFragment : Fragment() {
             viewModel.addButtonClicked()
         }
 
+        //
+//        print("COORDINADAS: ")
+//        var p = viewModel.getXYTile(40.333,-3.7675,19)
+
+        //print(p.first)
+
         viewModel.navigate.observeEvent(viewLifecycleOwner) { navigate ->
             if (navigate) {
                 findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
@@ -45,7 +50,8 @@ class NodesListFragment : Fragment() {
 
         viewModel.open_node.observeEvent(viewLifecycleOwner) { open_node ->
             if(open_node){
-                findNavController().navigate(R.id.action_FirstFragment_to_nodeFragment)
+                val action = NodesListFragmentDirections.actionFirstFragmentToNodeFragment().setItemSelected(viewModel.itemSelected)
+                findNavController().navigate(action)
             }
 
         }

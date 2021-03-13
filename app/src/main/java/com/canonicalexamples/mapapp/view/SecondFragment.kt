@@ -7,24 +7,20 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import com.canonicalexamples.mapapp.R
 import com.canonicalexamples.mapapp.app.MapApp
-import com.canonicalexamples.mapapp.model.Node
-import com.canonicalexamples.mapapp.viewmodels.MapViewModel
-import com.canonicalexamples.mapapp.viewmodels.TeasListViewModelFactory
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import com.canonicalexamples.mapapp.viewmodels.NodesListViewModel
+import com.canonicalexamples.mapapp.viewmodels.NodesListViewModelFactory
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
  */
 class SecondFragment : Fragment() {
 
-    private val viewModel: MapViewModel by viewModels {
+    private val viewModel: NodesListViewModel by viewModels {
         val app = MapApp()
-        TeasListViewModelFactory(app.database, app.webservice)
+        NodesListViewModelFactory(app.database, app.webservice)
     }
 
     override fun onCreateView(

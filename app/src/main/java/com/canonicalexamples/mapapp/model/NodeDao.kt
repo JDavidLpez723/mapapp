@@ -27,12 +27,16 @@ import androidx.room.Update
 interface NodeDao {
     @Insert
     suspend fun create(node: Node)
+
     @Query("SELECT * FROM node_table WHERE id = :id")
     suspend fun get(id: Int): Node?
+
     @Query("SELECT * FROM node_table")
     suspend fun fetchNodes(): List<Node>
+
     @Update
     suspend fun update(node: Node)
+
     @Query("DELETE FROM node_table WHERE id = :id")
     suspend fun delete(id: Int)
 }

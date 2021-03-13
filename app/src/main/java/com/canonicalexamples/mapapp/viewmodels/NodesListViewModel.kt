@@ -9,6 +9,8 @@ import com.canonicalexamples.mapapp.model.MapDatabase
 import com.canonicalexamples.mapapp.model.Node
 import com.canonicalexamples.mapapp.model.TileService
 import com.canonicalexamples.mapapp.util.Event
+import com.canonicalexamples.mapapp.view.NodeFragmentDirections
+import com.canonicalexamples.mapapp.view.NodesListFragmentDirections
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlin.math.*
@@ -31,7 +33,7 @@ import kotlin.math.*
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-class MapViewModel(private val database: MapDatabase, private val webservice: TileService): ViewModel() {
+class NodesListViewModel(private val database: MapDatabase, private val webservice: TileService): ViewModel() {
     private val _navigate: MutableLiveData<Event<Boolean>> = MutableLiveData()
     val navigate: LiveData<Event<Boolean>> = _navigate
     private val _open_node: MutableLiveData<Event<Boolean>> = MutableLiveData()
@@ -39,13 +41,20 @@ class MapViewModel(private val database: MapDatabase, private val webservice: Ti
     private var nodesList = listOf<Node>()
     data class Item(val name: String)
 
-    var itemSelected: Int = 0
+    public var itemSelected = 0
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
             nodesList = database.nodeDao.fetchNodes()
         }
     }
+
+//    fun init_list(){
+//        viewModelScope.launch(Dispatchers.IO) {
+//            nodesList = database.nodeDao.fetchNodes()
+//        }
+//    }
+
 
     val numberOfItems: Int
         get() = nodesList.count()
@@ -57,15 +66,13 @@ class MapViewModel(private val database: MapDatabase, private val webservice: Ti
     fun addButtonClicked() {
         _navigate.value = Event(true)
         viewModelScope.launch(Dispatchers.IO) {
-            database.nodeDao.create(node = Node(x=800.0, y=-20.0, tag="tag"))
-            //Update Nodes List
-            //nodesList = database.nodeDao.fetchNodes()
+            //database.nodeDao.create(node = Node(x=800.0, y=-20.0, tag="tag"))
         }
     }
 
-    fun getItem(n: Int) = Item(name = nodesList[n].x.toString() + ", " + nodesList[n].y.toString())
+    fun getItem(n: Int) = Item(name = nodesList[n].x.toString() + ", " + nodesList[n].y.toString()
+                                + " " +nodesList[n].tag)
     fun getNode(i: Int): Node = nodesList[i]
-    fun getSelectedNode() = nodesList[itemSelected]
 
     //When an item of the adapter list has been clicked:
     fun onClickItem(n: Int) {
@@ -74,9 +81,11 @@ class MapViewModel(private val database: MapDatabase, private val webservice: Ti
             val todo = webservice.getTodo(n).await()
             println("todo: ${todo.title}")
         }*/
+
+        //Pass Selected Item index to other view Model
+        //val action = NodesListFragmentDirections.ActionFirstFragmentToNodeFragment()
         itemSelected = n
         _open_node.value = Event(true)
-
     }
 
     fun getXYTile(lat : Double, lon: Double, zoom : Int) : Pair<Int, Int> {
@@ -96,18 +105,18 @@ class MapViewModel(private val database: MapDatabase, private val webservice: Ti
         if (ytile >= (1 shl zoom)) {
             ytile = (1 shl zoom) - 1
         }
-
+        println("https://a.tile.openstreetmap.org/"+zoom+"/"+xtile+"/"+ytile+".png")
         return Pair(xtile, ytile)
     }
 
 
 }
 
-class TeasListViewModelFactory(private val database: MapDatabase, private val webservice: TileService): ViewModelProvider.Factory {
+class NodesListViewModelFactory(private val database: MapDatabase, private val webservice: TileService): ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(MapViewModel::class.java)) {
+        if (modelClass.isAssignableFrom(NodesListViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return MapViewModel(database, webservice) as T
+            return NodesListViewModel(database, webservice) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

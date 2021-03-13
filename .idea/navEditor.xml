@@ -8,18 +8,23 @@
             <LayoutPositions>
               <option name="myPositions">
                 <map>
-                  <entry key="FirstFragment">
+                  <entry key="NodesListFragment">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="256" />
+                            <option name="x" value="12" />
                             <option name="y" value="12" />
                           </Point>
                         </option>
                         <option name="myPositions">
                           <map>
                             <entry key="action_FirstFragment_to_SecondFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="action_FirstFragment_to_nodeFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -58,6 +63,15 @@
                             <option name="x" value="526" />
                             <option name="y" value="8" />
                           </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_nodeFragment_to_NodesListFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
                         </option>
                       </LayoutPositions>
                     </value>

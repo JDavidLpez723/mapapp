@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
+    app:startDestination="@id/NodesListFragment">
 
     <fragment
-        android:id="@+id/FirstFragment"
+        android:id="@+id/NodesListFragment"
         android:name="com.canonicalexamples.mapapp.view.NodesListFragment"
         android:label="@string/first_fragment_label"
         tools:layout="@layout/fragment_nodes_list">
@@ -17,6 +17,7 @@
         <action
             android:id="@+id/action_FirstFragment_to_nodeFragment"
             app:destination="@id/nodeFragment" />
+
     </fragment>
     <fragment
         android:id="@+id/SecondFragment"
@@ -26,14 +27,18 @@
 
         <action
             android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
+            app:destination="@id/NodesListFragment" />
     </fragment>
     <fragment
         android:id="@+id/nodeFragment"
         android:name="com.canonicalexamples.mapapp.view.NodeFragment"
         android:label="NodeFragment" >
         <action
-            android:id="@+id/action_nodeFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
+            android:id="@+id/action_nodeFragment_to_NodesListFragment"
+            app:destination="@id/NodesListFragment" />
+        <argument
+            android:name="itemSelected"
+            app:argType="integer"
+            android:defaultValue="0" />
     </fragment>
 </navigation>

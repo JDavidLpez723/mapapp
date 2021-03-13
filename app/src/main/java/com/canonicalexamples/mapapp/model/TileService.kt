@@ -1,6 +1,8 @@
 package com.canonicalexamples.mapapp.model
 
+import okhttp3.ResponseBody
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 
@@ -23,8 +25,11 @@ import retrofit2.http.Path
  * limitations under the License.
  */
 interface TileService {
-    @GET("/{zoom}/{x}/{y}")
+    @GET("7/62/42.png")
+    fun getExample(): Call<ResponseBody>
+
+    @GET("{zoom}/{x}/{y}.png")
     fun getTile(@Path(value = "zoom") zoom: Int,
                 @Path(value = "x") x: Int,
-                @Path(value = "y") y: Int): Call<Tile>
+                @Path(value = "y") y: Int): Call<ResponseBody>
 }
