@@ -10,7 +10,7 @@
         android:id="@+id/button_back"
         android:layout_width="137dp"
         android:layout_height="63dp"
-        android:layout_marginBottom="44dp"
+        android:layout_marginBottom="50dp"
         android:text="@string/previous"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,59 +21,64 @@
         android:id="@+id/title_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="224dp"
-        android:layout_marginTop="72dp"
+        android:layout_marginTop="85dp"
         android:text="TextView"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/btaddzoom" />
 
     <ImageView
         android:id="@+id/iv"
-        android:layout_width="256dp"
+        android:layout_width="0dp"
         android:layout_height="256dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginBottom="104dp"
-        app:layout_constraintBottom_toTopOf="@+id/button_back"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
     <TextView
         android:id="@+id/x_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="11dp"
-        android:layout_marginEnd="129dp"
         android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/button_back"
+        app:layout_constraintEnd_toStartOf="@+id/y_textView"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title_textView" />
 
     <TextView
         android:id="@+id/y_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="11dp"
-        android:layout_marginEnd="128dp"
         android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/button_back"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/x_textView" />
+        app:layout_constraintStart_toEndOf="@+id/x_textView"
+        app:layout_constraintTop_toBottomOf="@+id/title_textView" />
 
     <Button
         android:id="@+id/btaddzoom"
-        android:layout_width="59dp"
+        android:layout_width="0dp"
         android:layout_height="60dp"
-        android:layout_marginTop="275dp"
-        android:layout_marginEnd="27dp"
+        android:layout_marginTop="19dp"
+        android:layout_marginEnd="16dp"
         android:text="+"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/btsubszoom"
+        app:layout_constraintTop_toBottomOf="@+id/iv" />
 
     <Button
         android:id="@+id/btsubszoom"
-        android:layout_width="59dp"
-        android:layout_height="51dp"
-        android:layout_marginTop="124dp"
-        android:layout_marginEnd="27dp"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="19dp"
         android:text="-"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btaddzoom" />
+        android:textSize="30sp"
+        app:layout_constraintEnd_toStartOf="@+id/btaddzoom"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv" />
 </androidx.constraintlayout.widget.ConstraintLayout>
