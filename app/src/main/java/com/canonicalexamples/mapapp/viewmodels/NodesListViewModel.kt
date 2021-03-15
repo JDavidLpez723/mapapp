@@ -36,6 +36,8 @@ import kotlin.math.*
 class NodesListViewModel(private val database: MapDatabase, private val webservice: TileService): ViewModel() {
     private val _navigate: MutableLiveData<Event<Boolean>> = MutableLiveData()
     val navigate: LiveData<Event<Boolean>> = _navigate
+    private val _navigate_index: MutableLiveData<Event<Int>> = MutableLiveData()
+    val navigate_index: LiveData<Event<Int>> = _navigate_index
     private val _open_node: MutableLiveData<Event<Boolean>> = MutableLiveData()
     val open_node: LiveData<Event<Boolean>> = _open_node
     private var nodesList = listOf<Node>()
@@ -63,8 +65,9 @@ class NodesListViewModel(private val database: MapDatabase, private val webservi
 
 
     //Button for adding a new node
-    fun addButtonClicked() {
+    fun addButtonClicked(index:Int) {
         _navigate.value = Event(true)
+        _navigate_index.value = Event(index)
         viewModelScope.launch(Dispatchers.IO) {
             //database.nodeDao.create(node = Node(x=800.0, y=-20.0, tag="tag"))
         }

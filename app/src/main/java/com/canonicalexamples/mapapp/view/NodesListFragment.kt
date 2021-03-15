@@ -33,7 +33,7 @@ class NodesListFragment : Fragment() {
 
         binding.recyclerView.adapter = NodesListAdapter(viewModel = viewModel)
         binding.fab.setOnClickListener {
-            viewModel.addButtonClicked()
+            viewModel.addButtonClicked(1)
         }
 
         //
@@ -44,7 +44,11 @@ class NodesListFragment : Fragment() {
 
         viewModel.navigate.observeEvent(viewLifecycleOwner) { navigate ->
             if (navigate) {
-                findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+                viewModel.navigate_index.observeEvent(viewLifecycleOwner) { navigate_index ->
+                    if (navigate_index == 1) {
+                        findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+                    }
+                }
             }
         }
 

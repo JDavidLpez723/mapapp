@@ -71,7 +71,7 @@ class NodeFragment: Fragment(){
         viewModel.zoom.observe(viewLifecycleOwner){
             val z = viewModel.zoom.value ?: -1
 
-            println("Zpom changed to "+z.toString())
+            println("Zoom changed to "+z.toString())
 
             if(z > 0 ){
                 val builder = this.context?.let { Picasso.Builder(it) }
@@ -79,8 +79,8 @@ class NodeFragment: Fragment(){
                     //val uri = "https://api.maptiler.com/maps/basic/256/7/63/42.png?key=w3yoRskFIgZceY3WMSjy"
                     val uri = viewModel.getTileUri()
                     builder.build().load(uri)
-                            .placeholder(R.drawable.just_grey_light_grey)
-                            .error(R.drawable.error)
+                         //   .placeholder(R.drawable.just_grey_light_grey)
+                         //   .error(R.drawable.error)
                             .into(binding.iv)
                 }
 
