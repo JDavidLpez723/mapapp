@@ -79,7 +79,7 @@ class NodeFragment: Fragment(){
                     //val uri = "https://api.maptiler.com/maps/basic/256/7/63/42.png?key=w3yoRskFIgZceY3WMSjy"
                     val uri = viewModel.getTileUri()
                     builder.build().load(uri)
-                         //   .placeholder(R.drawable.just_grey_light_grey)
+                       //     .placeholder(R.drawable.just_grey_light_grey)
                          //   .error(R.drawable.error)
                             .into(binding.iv)
                 }

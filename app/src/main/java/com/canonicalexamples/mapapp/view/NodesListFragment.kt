@@ -1,9 +1,12 @@
 package com.canonicalexamples.mapapp.view
 
+import android.content.Context
+import android.location.LocationManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -14,6 +17,7 @@ import com.canonicalexamples.mapapp.util.observeEvent
 import com.canonicalexamples.mapapp.viewmodels.NodesListViewModel
 import com.canonicalexamples.mapapp.viewmodels.NodesListViewModelFactory
 
+
 class NodesListFragment : Fragment() {
 
     private lateinit var binding: FragmentNodesListBinding
@@ -21,6 +25,7 @@ class NodesListFragment : Fragment() {
         val app = activity?.application as MapApp
         NodesListViewModelFactory(app.database, app.webservice)
     }
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
