@@ -68,6 +68,9 @@ class NodeFragment: Fragment(){
             //println("Body: ${it.string()}")
         }
 
+        //PAra ver que funciona:
+        viewModel.getCoords()
+
         viewModel.zoom.observe(viewLifecycleOwner){
             val z = viewModel.zoom.value ?: -1
 

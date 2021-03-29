@@ -3,8 +3,7 @@ package com.canonicalexamples.mapapp.model
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Response
-import retrofit2.http.GET
-import retrofit2.http.Path
+import retrofit2.http.*
 
 /**
  * 20210218. Initial version created by jorge
@@ -25,11 +24,20 @@ import retrofit2.http.Path
  * limitations under the License.
  */
 interface TileService {
-    @GET("7/62/42.png")
-    fun getExample(): Call<ResponseBody>
 
-    @GET("{zoom}/{x}/{y}.png")
-    fun getTile(@Path(value = "zoom") zoom: Int,
-                @Path(value = "x") x: Int,
-                @Path(value = "y") y: Int): Call<ResponseBody>
+    @Headers(
+        "kvstoreio_api_key: 68f55af1fda77bd6e58369f343a2f2e894e3a892403ef824817f2d766c0e5bdc"
+    )
+    @GET("coords")
+    fun getCoords(): Call<ResponseBody>
+
+    @Headers(
+            "kvstoreio_api_key: 68f55af1fda77bd6e58369f343a2f2e894e3a892403ef824817f2d766c0e5bdc",
+            "Content-Type: text/plain"
+    )
+    @PUT("coords")
+    fun setCoords(@Body data: String): Call<ResponseBody>
+
+
+
 }

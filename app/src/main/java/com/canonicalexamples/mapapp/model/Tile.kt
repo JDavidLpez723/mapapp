@@ -20,6 +20,5 @@ package com.canonicalexamples.mapapp.model
  */
 data class Tile(
     val id: Int = 0,
-    val title: String = "",
-    val completed: Boolean = false
+    val data: String = ""
 )

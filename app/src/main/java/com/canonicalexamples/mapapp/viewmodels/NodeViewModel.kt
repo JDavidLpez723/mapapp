@@ -46,9 +46,7 @@ class NodeViewModel(private val database: MapDatabase, private val webservice: T
     fun setZoom(zoom: Int){
         _zoom.postValue(zoom)
     }
-    fun addZoom() {
-        setZoom(  (_zoom?.value ?: 9) +1 )
-    }
+    fun addZoom() { setZoom( (_zoom?.value?:9) +1)}
     fun subsZoom() { setZoom( (_zoom?.value?:11) - 1) }
 
     fun getTileUri(): String {
@@ -82,6 +80,22 @@ class NodeViewModel(private val database: MapDatabase, private val webservice: T
             ytile = (1 shl zoom) - 1
         }
         return Pair(xtile, ytile)
+    }
+
+    fun getCoords(){
+        viewModelScope.launch(Dispatchers.IO) {
+            val r = webservice.getCoords().await()
+            println("MEssage:" + r.string())
+            //print(r.execute().isSuccessful)
+        }
+    }
+
+    fun setCoords(data: String){
+        viewModelScope.launch(Dispatchers.IO) {
+            val r = webservice.setCoords(data).await()
+            println("MEssage SetCoords:" + r.string())
+            //print(r.execute().isSuccessful)
+        }
     }
 }
 
