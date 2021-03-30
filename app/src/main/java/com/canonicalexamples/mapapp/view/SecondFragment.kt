@@ -38,6 +38,7 @@ class SecondFragment : Fragment() {
         return binding.root
 
     }
+
     private val locationListener: LocationListener = object : LocationListener {
         override fun onLocationChanged(location: Location) {
             binding.thetext.text = ("" + location.longitude + ":" + location.latitude)

@@ -85,7 +85,7 @@ class NodeViewModel(private val database: MapDatabase, private val webservice: T
     fun getCoords(){
         viewModelScope.launch(Dispatchers.IO) {
             val r = webservice.getCoords().await()
-            println("MEssage:" + r.string())
+            println("Message:" + r.string())
             //print(r.execute().isSuccessful)
         }
     }
