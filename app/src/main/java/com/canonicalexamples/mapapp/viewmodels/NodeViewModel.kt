@@ -9,7 +9,9 @@ import com.canonicalexamples.mapapp.model.TileService
 import com.canonicalexamples.mapapp.util.Event
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import okhttp3.RequestBody
 import okhttp3.ResponseBody
+import org.json.JSONObject
 import retrofit2.await
 import kotlin.math.PI
 import kotlin.math.asinh
@@ -81,6 +83,20 @@ class NodeViewModel(private val database: MapDatabase, private val webservice: T
         }
         return Pair(xtile, ytile)
     }
+
+    fun registerUser(email :String, password: String){
+        viewModelScope.launch(Dispatchers.IO) {
+            val r = webservice.registerUser(createJsonRequestBody(
+                    "email" to email, "password" to password)).await()
+            println("Register User:" + r.string())
+            println()
+        }
+    }
+
+    private fun createJsonRequestBody(vararg params: Pair<String, String>) =
+            RequestBody.create(
+                    okhttp3.MediaType.parse("application/json; charset=utf-8"),
+                    JSONObject(mapOf(*params)).toString())
 
     fun getCoords(){
         viewModelScope.launch(Dispatchers.IO) {

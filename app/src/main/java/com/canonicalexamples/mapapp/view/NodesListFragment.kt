@@ -51,7 +51,7 @@ class NodesListFragment : Fragment() {
             if (navigate) {
                 viewModel.navigate_index.observeEvent(viewLifecycleOwner) { navigate_index ->
                     if (navigate_index == 1) {
-                        findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+
                     }
                 }
             }

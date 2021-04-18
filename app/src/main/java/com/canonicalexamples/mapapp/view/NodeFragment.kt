@@ -61,12 +61,11 @@ class NodeFragment: Fragment(){
         }
         binding.btsubszoom.setOnClickListener{
             viewModel.subsZoom()
+            //viewModel.registerUser("xwillmsb_a402s@bylup.com", "prueba123")
         }
         //binding.iv.setImageResource(R.drawable.i42)
 
-        viewModel.body.observe(viewLifecycleOwner) {
-            //println("Body: ${it.string()}")
-        }
+
 
         //PAra ver que funciona:
         viewModel.getCoords()
@@ -82,8 +81,8 @@ class NodeFragment: Fragment(){
                     //val uri = "https://api.maptiler.com/maps/basic/256/7/63/42.png?key=w3yoRskFIgZceY3WMSjy"
                     val uri = viewModel.getTileUri()
                     builder.build().load(uri)
-                       //     .placeholder(R.drawable.just_grey_light_grey)
-                         //   .error(R.drawable.error)
+                            .placeholder(R.drawable.just_grey_light_grey)
+                            .error(R.drawable.error)
                             .into(binding.iv)
                 }
 

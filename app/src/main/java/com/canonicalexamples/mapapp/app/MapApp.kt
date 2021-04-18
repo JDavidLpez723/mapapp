@@ -34,7 +34,7 @@ class MapApp: Application() {
     val database by lazy { MapDatabase.getInstance(this) }
     val webservice by lazy {
         Retrofit.Builder()
-            .baseUrl("https://api.kvstore.io/collections/mapappcollection/items/")
+            .baseUrl("https://api.kvstore.io/")
             .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
             .build().create(TileService::class.java)
     }

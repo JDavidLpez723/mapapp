@@ -14,27 +14,57 @@ import com.canonicalexamples.mapapp.view.NodesListFragmentDirections
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlin.math.*
-class MainViewModel(): ViewModel() {
+class MainViewModel(private val database: MapDatabase): ViewModel() {
     private val _click: MutableLiveData<Event<Boolean>> = MutableLiveData()
     val click: LiveData<Event<Boolean>> = _click
-    private val _click_index: MutableLiveData<Event<Int>> = MutableLiveData()
-    val click_index: LiveData<Event<Int>> = _click_index
+    var click_index: Int = 0
+
+    var lastItem: MutableLiveData<Int> = MutableLiveData(0)
 
     fun buttonClicked(index:Int) {
-        _click.value = Event(true)
-        _click_index.value = Event(index)
-        viewModelScope.launch(Dispatchers.IO) {
-            //database.nodeDao.create(node = Node(x=800.0, y=-20.0, tag="tag"))
+        click_index = index
+
+        //Set Parking
+        if(index == 1){
+            viewModelScope.launch(Dispatchers.IO){
+                val id = database.nodeDao.getMaximumId()
+                id?.let {
+                    database.nodeDao.create(Node(
+                            x = 10.0,
+                            y = 10.0,
+                            tag = "Nuevo"
+                    ))
+                }
+
+            }
+            _click.value = Event(true)
         }
+
+        //Find my Car
+        if (index == 2){
+            viewModelScope.launch(Dispatchers.IO){
+                val n = database.nodeDao.getMaximumId()
+                println("MAXIMUM ID = "+n)
+                n?.let {
+
+                }
+                lastItem.postValue(n)
+            }
+
+        }
+
+
     }
+
+
 
 }
 
-class MainViewModelFactory(): ViewModelProvider.Factory {
+class MainViewModelFactory(private val database: MapDatabase): ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return MainViewModel() as T
+            return MainViewModel(database) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

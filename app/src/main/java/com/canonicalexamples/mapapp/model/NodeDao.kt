@@ -39,4 +39,10 @@ interface NodeDao {
 
     @Query("DELETE FROM node_table WHERE id = :id")
     suspend fun delete(id: Int)
+
+    @Query("SELECT * FROM node_table WHERE id = (SELECT MAX(id) FROM node_table)")
+    suspend fun getLastNode(): Node?
+
+    @Query("SELECT MAX(id) FROM node_table")
+    suspend fun getMaximumId(): Int?
 }

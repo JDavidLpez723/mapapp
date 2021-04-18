@@ -18,7 +18,7 @@ import androidx.navigation.fragment.findNavController
 import com.canonicalexamples.mapapp.R
 import com.canonicalexamples.mapapp.app.MapApp
 import com.canonicalexamples.mapapp.databinding.FragmentMainBinding
-import com.canonicalexamples.mapapp.databinding.FragmentSecondBinding
+//import com.canonicalexamples.mapapp.databinding.FragmentSecondBinding
 import com.canonicalexamples.mapapp.util.observeEvent
 import com.canonicalexamples.mapapp.viewmodels.MainViewModel
 import com.canonicalexamples.mapapp.viewmodels.MainViewModelFactory
@@ -34,7 +34,7 @@ class MainFragment : Fragment() {
     private lateinit var binding: FragmentMainBinding
     private val viewModel: MainViewModel by viewModels {
         val app = activity?.application as MapApp
-        MainViewModelFactory()
+        MainViewModelFactory(app.database)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -62,17 +62,17 @@ class MainFragment : Fragment() {
 
         viewModel.click.observeEvent(viewLifecycleOwner) { click ->
             if (click) {
-                viewModel.click_index.observeEvent(viewLifecycleOwner) { click_index ->
+                val click_index = viewModel.click_index
                     if (click_index == 1) {
                         getLastKnownLocation()
                     }
                     else if (click_index == 2) {
-                        findNavController().navigate(R.id.action_mainFragment_to_SecondFragment)
+                        //findNavController().navigate(R.id.action_mainFragment_to_SecondFragment)
                     }
                     else if (click_index == 3) {
-                        findNavController().navigate(R.id.action_mainFragment_to_SecondFragment)
+                        findNavController().navigate(R.id.action_mainFragment_to_NodesListFragment)
                     }
-                }
+
             }
         }
 

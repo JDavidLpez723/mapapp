@@ -12,22 +12,9 @@
         tools:layout="@layout/fragment_nodes_list">
 
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
-        <action
             android:id="@+id/action_FirstFragment_to_nodeFragment"
             app:destination="@id/nodeFragment" />
 
-    </fragment>
-    <fragment
-        android:id="@+id/SecondFragment"
-        android:name="com.canonicalexamples.mapapp.view.SecondFragment"
-        android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second">
-
-        <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/NodesListFragment" />
     </fragment>
     <fragment
         android:id="@+id/nodeFragment"
@@ -40,6 +27,8 @@
             android:name="itemSelected"
             app:argType="integer"
             android:defaultValue="0" />
+
+
     </fragment>
     <fragment
         android:id="@+id/mainFragment"
@@ -47,7 +36,10 @@
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" >
         <action
-            android:id="@+id/action_mainFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
+            android:id="@+id/action_mainFragment_to_NodesListFragment"
+            app:destination="@id/NodesListFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_nodeFragment"
+            app:destination="@id/nodeFragment" />
     </fragment>
 </navigation>

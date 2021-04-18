@@ -1,5 +1,6 @@
 package com.canonicalexamples.mapapp.model
 
+import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Response
@@ -28,15 +29,21 @@ interface TileService {
     @Headers(
         "kvstoreio_api_key: 68f55af1fda77bd6e58369f343a2f2e894e3a892403ef824817f2d766c0e5bdc"
     )
-    @GET("coords")
+    @GET("collections/mapappcollection/items/coords")
     fun getCoords(): Call<ResponseBody>
 
     @Headers(
             "kvstoreio_api_key: 68f55af1fda77bd6e58369f343a2f2e894e3a892403ef824817f2d766c0e5bdc",
             "Content-Type: text/plain"
     )
-    @PUT("coords")
+    @PUT("collections/mapappcollection/items/coords")
     fun setCoords(@Body data: String): Call<ResponseBody>
+
+    @Headers(
+            "Content-Type: application/json"
+    )
+    @POST("users")
+    fun registerUser(@Body params: RequestBody): Call<ResponseBody>
 
 
 
