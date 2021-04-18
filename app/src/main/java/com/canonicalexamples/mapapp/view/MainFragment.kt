@@ -64,7 +64,6 @@ class MainFragment : Fragment() {
             if (click) {
                 viewModel.click_index.observeEvent(viewLifecycleOwner) { click_index ->
                     if (click_index == 1) {
-
                         getLastKnownLocation()
                     }
                     else if (click_index == 2) {
@@ -89,7 +88,7 @@ class MainFragment : Fragment() {
                 Manifest.permission.ACCESS_COARSE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            println("me cago en todos los permisos")
+            println("Permissions are not granted")
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
             // here to request the missing permissions, and then overriding
@@ -102,13 +101,13 @@ class MainFragment : Fragment() {
         println(fusedLocationClient.lastLocation)
         fusedLocationClient.lastLocation.addOnSuccessListener { location->
                 if (location != null) {
-                    println("ole ole y ole")
+                    println("It worked")
                     println(location.latitude)
                     println(location.longitude)
 
                 }
                 else{
-                    println("mierda")
+                    println("It didn't work")
                 }
 
             }

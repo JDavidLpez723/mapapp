@@ -1,9 +1,9 @@
 package com.canonicalexamples.mapapp.model
 
-import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.canonicalexamples.mapapp.app.MapApp
 
 /**
  * 20210211. Initial version created by jorge
@@ -30,7 +30,7 @@ abstract class MapDatabase: RoomDatabase() {
     companion object {
         @Volatile
         private var INSTANCE: MapDatabase? = null
-        fun getInstance(context: Context): MapDatabase {
+        fun getInstance(context: MapApp): MapDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,

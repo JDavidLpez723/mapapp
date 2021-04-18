@@ -1,6 +1,7 @@
 package com.canonicalexamples.mapapp.view
 
 import android.content.Context.LOCATION_SERVICE
+import android.icu.math.BigDecimal.valueOf
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
@@ -15,14 +16,28 @@ import androidx.navigation.fragment.findNavController
 import com.canonicalexamples.mapapp.R
 import com.canonicalexamples.mapapp.app.MapApp
 import com.canonicalexamples.mapapp.databinding.FragmentSecondBinding
+import com.canonicalexamples.mapapp.model.MapDatabase
+import com.canonicalexamples.mapapp.model.Node
 import com.canonicalexamples.mapapp.util.observeEvent
 import com.canonicalexamples.mapapp.viewmodels.NodesListViewModel
 import com.canonicalexamples.mapapp.viewmodels.NodesListViewModelFactory
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
+
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
  */
 class SecondFragment : Fragment() {
+
+    val app =MapApp()
+    val database=app.database
+    var counter=5
+    lateinit var pointName:String
+    var pointLatitude:Double=0.0
+    var pointLongitude:Double=0.0
     var gps_enabled = false
     var network_enabled = false
     private var locationManager : LocationManager? = null
@@ -77,10 +92,26 @@ class SecondFragment : Fragment() {
                 Log.d("myTag", "Security Exception, no location available")
             }
         }
+
         viewModel.navigate.observeEvent(viewLifecycleOwner) { navigate ->
             if (navigate) {
                 viewModel.navigate_index.observeEvent(viewLifecycleOwner) { navigate_index ->
                     if (navigate_index == 2) {
+                        pointName= binding.editTextTextPersonName.text.toString()
+                        pointLatitude= binding.editTextTextPersonName2.text.toString().toDouble()
+                        pointLongitude= binding.editTextTextPersonName3.text.toString().toDouble()
+
+                        CoroutineScope(Dispatchers.IO + SupervisorJob()).launch {
+                            database.nodeDao.apply {
+                                //this.create(node = Node(id=0, x=7.0, y=99.0, tag="Mi Casa"))
+                                this.create(node = Node(id=counter, x=pointLatitude, y=pointLongitude, tag=pointName))
+                               counter++;
+//                this.create(tea = Tea(id = 0, name = "Oolong", rating = 1))
+//                this.create(tea = Tea(id = 1, name = "Pu erh", rating = 1))
+//                this.create(tea = Tea(id = 2, name = "Green tea", rating = 1))
+                            }
+                        }
+
                         findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
                     }
                 }
