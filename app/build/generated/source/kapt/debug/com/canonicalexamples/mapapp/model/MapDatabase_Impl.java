@@ -1,19 +1,13 @@
-package com.canonicalexamples.tearank.model;
+package com.canonicalexamples.mapapp.model;
 
 import androidx.room.DatabaseConfiguration;
 import androidx.room.InvalidationTracker;
 import androidx.room.RoomOpenHelper;
-import androidx.room.RoomOpenHelper.Delegate;
-import androidx.room.RoomOpenHelper.ValidationResult;
 import androidx.room.util.DBUtil;
 import androidx.room.util.TableInfo;
-import androidx.room.util.TableInfo.Column;
-import androidx.room.util.TableInfo.ForeignKey;
-import androidx.room.util.TableInfo.Index;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import androidx.sqlite.db.SupportSQLiteOpenHelper;
-import androidx.sqlite.db.SupportSQLiteOpenHelper.Callback;
-import androidx.sqlite.db.SupportSQLiteOpenHelper.Configuration;
+
 import java.lang.Override;
 import java.lang.String;
 import java.lang.SuppressWarnings;
@@ -22,8 +16,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 @SuppressWarnings({"unchecked", "deprecation"})
-public final class TeaDatabase_Impl extends TeaDatabase {
-  private volatile TeaDao _teaDao;
+public final class MapDatabase_Impl extends MapDatabase {
+  private volatile NodeDao _nodeDao;
 
   @Override
   protected SupportSQLiteOpenHelper createOpenHelper(DatabaseConfiguration configuration) {
@@ -125,15 +119,15 @@ public final class TeaDatabase_Impl extends TeaDatabase {
   }
 
   @Override
-  public TeaDao getTeaDao() {
-    if (_teaDao != null) {
-      return _teaDao;
+  public NodeDao getNodeDao() {
+    if (_nodeDao != null) {
+      return _nodeDao;
     } else {
       synchronized(this) {
-        if(_teaDao == null) {
-          _teaDao = new TeaDao_Impl(this);
+        if(_nodeDao == null) {
+          _nodeDao = new NodeDao_Impl(this);
         }
-        return _teaDao;
+        return _nodeDao;
       }
     }
   }

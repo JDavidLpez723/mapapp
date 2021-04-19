@@ -1,4 +1,4 @@
-package com.canonicalexamples.tearank.view
+package com.canonicalexamples.mapapp.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,18 +7,18 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.canonicalexamples.tearank.R
-import com.canonicalexamples.tearank.app.TeaRankApp
-import com.canonicalexamples.tearank.databinding.FragmentTeasListBinding
-import com.canonicalexamples.tearank.util.observeEvent
-import com.canonicalexamples.tearank.viewmodels.TeasListViewModel
-import com.canonicalexamples.tearank.viewmodels.TeasListViewModelFactory
+import com.canonicalexamples.mapapp.R
+import com.canonicalexamples.mapapp.app.MapApp
+import com.canonicalexamples.mapapp.databinding.FragmentTeasListBinding
+import com.canonicalexamples.mapapp.util.observeEvent
+import com.canonicalexamples.mapapp.viewmodels.TeasListViewModel
+import com.canonicalexamples.mapapp.viewmodels.TeasListViewModelFactory
 
 class TeasListFragment : Fragment() {
 
     private lateinit var binding: FragmentTeasListBinding
     private val viewModel: TeasListViewModel by viewModels {
-        val app = activity?.application as TeaRankApp
+        val app = activity?.application as MapApp
         TeasListViewModelFactory(app.database, app.webservice)
     }
 

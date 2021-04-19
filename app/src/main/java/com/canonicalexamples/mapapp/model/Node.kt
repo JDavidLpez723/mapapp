@@ -1,4 +1,4 @@
-package com.canonicalexamples.tearank.model
+package com.canonicalexamples.mapapp.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -21,13 +21,13 @@ import androidx.room.PrimaryKey
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@Entity(tableName = "tea_table")
-data class Tea(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
-    val name: String = "",
-    val rating: Int = -1
-    ) {
-    val isValid: Boolean
-        get() = name.isNotEmpty() && id >= 0 && rating>=0 && rating < 5
+@Entity(tableName = "node_table")
+data class Node(
+        @PrimaryKey(autoGenerate = true)
+        val id: Int = 0,
+        val x: Double = 0.0,
+        val y: Double = 0.0,
+        val tag: String = ""
+) {
+
 }

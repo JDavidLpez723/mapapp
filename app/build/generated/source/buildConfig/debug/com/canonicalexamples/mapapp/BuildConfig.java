@@ -1,7 +1,7 @@
 /**
  * Automatically generated file. DO NOT MODIFY
  */
-package com.canonicalexamples.tearank;
+package com.canonicalexamples.mapapp;
 
 public final class BuildConfig {
   public static final boolean DEBUG = Boolean.parseBoolean("true");

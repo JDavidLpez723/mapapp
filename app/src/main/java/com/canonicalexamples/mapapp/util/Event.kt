@@ -1,4 +1,4 @@
-package com.canonicalexamples.tearank.util
+package com.canonicalexamples.mapapp.util
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData

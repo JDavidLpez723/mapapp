@@ -1,4 +1,4 @@
-package com.canonicalexamples.tearank.model
+package com.canonicalexamples.mapapp.model
 
 /**
  * 20210218. Initial version created by jorge

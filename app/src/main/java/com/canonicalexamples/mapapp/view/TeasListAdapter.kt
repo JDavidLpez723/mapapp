@@ -1,11 +1,11 @@
-package com.canonicalexamples.tearank.view
+package com.canonicalexamples.mapapp.view
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.canonicalexamples.tearank.databinding.ItemTeaBinding
-import com.canonicalexamples.tearank.viewmodels.TeasListViewModel
+import com.canonicalexamples.mapapp.databinding.ItemTeaBinding
+import com.canonicalexamples.mapapp.viewmodels.TeasListViewModel
 
 /**
  * 20210208. Initial version created by jorge

@@ -1,10 +1,9 @@
-package com.canonicalexamples.tearank.model
+package com.canonicalexamples.mapapp.model
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.room.TypeConverters
 
 /**
  * 20210211. Initial version created by jorge
@@ -24,18 +23,18 @@ import androidx.room.TypeConverters
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@Database(entities = [Tea::class], version = 1, exportSchema = false)
-abstract class TeaDatabase: RoomDatabase() {
-    abstract val teaDao: TeaDao
+@Database(entities = [Node::class], version = 1, exportSchema = false)
+abstract class MapDatabase: RoomDatabase() {
+    abstract val nodeDao: NodeDao
 
     companion object {
         @Volatile
-        private var INSTANCE: TeaDatabase? = null
-        fun getInstance(context: Context): TeaDatabase {
+        private var INSTANCE: MapDatabase? = null
+        fun getInstance(context: Context): MapDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
-                    TeaDatabase::class.java,
+                    MapDatabase::class.java,
                     "tea_rank_database"
                 )
                     .fallbackToDestructiveMigration()

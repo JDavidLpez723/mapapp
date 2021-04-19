@@ -1,10 +1,10 @@
-package com.canonicalexamples.tearank.view
+package com.canonicalexamples.mapapp.view
 
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import com.canonicalexamples.tearank.R
+import com.canonicalexamples.mapapp.R
 
 class TeaRankActivity : AppCompatActivity() {
 

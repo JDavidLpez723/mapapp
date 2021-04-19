@@ -1,4 +1,4 @@
-package com.canonicalexamples.tearank
+package com.canonicalexamples.mapapp
 
 import org.junit.Assert.assertEquals
 import org.junit.Test

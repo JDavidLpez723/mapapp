@@ -1,4 +1,4 @@
-package com.canonicalexamples.tearank.model
+package com.canonicalexamples.mapapp.model
 
 import retrofit2.Call
 import retrofit2.http.GET
