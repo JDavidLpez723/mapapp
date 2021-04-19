@@ -24,7 +24,7 @@ import androidx.room.Update
  * limitations under the License.
  */
 @Dao
-interface TeaDao {
+interface NodeDao {
     @Insert
     suspend fun create(tea: Tea)
     @Query("SELECT * FROM tea_table WHERE id = :id")

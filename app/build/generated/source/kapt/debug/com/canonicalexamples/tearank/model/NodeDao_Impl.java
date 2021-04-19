@@ -22,7 +22,7 @@ import kotlin.Unit;
 import kotlin.coroutines.Continuation;
 
 @SuppressWarnings({"unchecked", "deprecation"})
-public final class TeaDao_Impl implements TeaDao {
+public final class NodeDao_Impl implements NodeDao {
   private final RoomDatabase __db;
 
   private final EntityInsertionAdapter<Tea> __insertionAdapterOfTea;
@@ -31,7 +31,7 @@ public final class TeaDao_Impl implements TeaDao {
 
   private final SharedSQLiteStatement __preparedStmtOfDelete;
 
-  public TeaDao_Impl(RoomDatabase __db) {
+  public NodeDao_Impl(RoomDatabase __db) {
     this.__db = __db;
     this.__insertionAdapterOfTea = new EntityInsertionAdapter<Tea>(__db) {
       @Override

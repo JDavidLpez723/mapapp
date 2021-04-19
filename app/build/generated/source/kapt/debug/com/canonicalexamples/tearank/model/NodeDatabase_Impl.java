@@ -22,8 +22,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 @SuppressWarnings({"unchecked", "deprecation"})
-public final class TeaDatabase_Impl extends TeaDatabase {
-  private volatile TeaDao _teaDao;
+public final class NodeDatabase_Impl extends NodeDatabase {
+  private volatile NodeDao _nodeDao;
 
   @Override
   protected SupportSQLiteOpenHelper createOpenHelper(DatabaseConfiguration configuration) {
@@ -125,15 +125,15 @@ public final class TeaDatabase_Impl extends TeaDatabase {
   }
 
   @Override
-  public TeaDao getTeaDao() {
-    if (_teaDao != null) {
-      return _teaDao;
+  public NodeDao getNodeDao() {
+    if (_nodeDao != null) {
+      return _nodeDao;
     } else {
       synchronized(this) {
-        if(_teaDao == null) {
-          _teaDao = new TeaDao_Impl(this);
+        if(_nodeDao == null) {
+          _nodeDao = new NodeDao_Impl(this);
         }
-        return _teaDao;
+        return _nodeDao;
       }
     }
   }

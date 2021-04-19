@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.room.TypeConverters
 
 /**
  * 20210211. Initial version created by jorge
@@ -25,17 +24,17 @@ import androidx.room.TypeConverters
  * limitations under the License.
  */
 @Database(entities = [Tea::class], version = 1, exportSchema = false)
-abstract class TeaDatabase: RoomDatabase() {
-    abstract val teaDao: TeaDao
+abstract class NodeDatabase: RoomDatabase() {
+    abstract val nodeDao: NodeDao
 
     companion object {
         @Volatile
-        private var INSTANCE: TeaDatabase? = null
-        fun getInstance(context: Context): TeaDatabase {
+        private var INSTANCE: NodeDatabase? = null
+        fun getInstance(context: Context): NodeDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
-                    TeaDatabase::class.java,
+                    NodeDatabase::class.java,
                     "tea_rank_database"
                 )
                     .fallbackToDestructiveMigration()

@@ -2,7 +2,7 @@ package com.canonicalexamples.tearank.app
 
 import android.app.Application
 import com.canonicalexamples.tearank.model.Tea
-import com.canonicalexamples.tearank.model.TeaDatabase
+import com.canonicalexamples.tearank.model.NodeDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -27,7 +27,7 @@ import kotlinx.coroutines.launch
  * limitations under the License.
  */
 class MapApp: Application() {
-    val database by lazy { TeaDatabase.getInstance(this) }
+    val database by lazy { NodeDatabase.getInstance(this) }
 //    val webservice by lazy {
 //        Retrofit.Builder()
 //            .baseUrl("https://jsonplaceholder.typicode.com/")
@@ -39,7 +39,7 @@ class MapApp: Application() {
 
         CoroutineScope(Dispatchers.IO + SupervisorJob()).launch {
             database.clearAllTables()
-            database.teaDao.apply {
+            database.nodeDao.apply {
                 this.create(tea = Tea(id = 0, name = "Oolong", rating = 1))
                 this.create(tea = Tea(id = 1, name = "Pu erh", rating = 1))
                 this.create(tea = Tea(id = 2, name = "Green tea", rating = 1))
