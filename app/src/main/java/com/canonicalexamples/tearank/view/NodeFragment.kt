@@ -57,10 +57,17 @@ class NodeFragment: Fragment(){
             }
         }
 
+        binding.buttonAddZoom.setOnClickListener{
+            viewModel.addZoom()
+        }
+        binding.buttonSubsZoom.setOnClickListener{
+            viewModel.subsZoom()
+        }
+
         viewModel.zoom.observe(viewLifecycleOwner){
             val z = viewModel.zoom.value ?: -1
 
-            println("Zoom changed to "+z.toString())
+//            println("Zoom changed to "+z.toString())
 
             if(z > 0 ){
                 val builder = this.context?.let { Picasso.Builder(it) }
@@ -75,6 +82,8 @@ class NodeFragment: Fragment(){
 
             }
         }
+
+
 
     }
 
