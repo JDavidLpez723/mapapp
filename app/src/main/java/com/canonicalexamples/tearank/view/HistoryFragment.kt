@@ -9,14 +9,14 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.canonicalexamples.tearank.R
 import com.canonicalexamples.tearank.app.MapApp
-import com.canonicalexamples.tearank.databinding.FragmentTeasListBinding
+import com.canonicalexamples.tearank.databinding.FragmentHistoryBinding
 import com.canonicalexamples.tearank.util.observeEvent
 import com.canonicalexamples.tearank.viewmodels.TeasListViewModel
 import com.canonicalexamples.tearank.viewmodels.TeasListViewModelFactory
 
-class TeasListFragment : Fragment() {
+class HistoryFragment : Fragment() {
 
-    private lateinit var binding: FragmentTeasListBinding
+    private lateinit var binding: FragmentHistoryBinding
     private val viewModel: TeasListViewModel by viewModels {
         val app = activity?.application as MapApp
         TeasListViewModelFactory(app.database, app.webservice)
@@ -27,7 +27,7 @@ class TeasListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = FragmentTeasListBinding.inflate(inflater, container, false)
+        binding = FragmentHistoryBinding.inflate(inflater, container, false)
         return binding.root
     }
 
