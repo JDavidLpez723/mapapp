@@ -17,6 +17,8 @@ android {
 
         vectorDrawables.useSupportLibrary true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+
     }
     buildFeatures {
         viewBinding true
@@ -26,9 +28,14 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
+            buildConfigField("String", "API_KEY", "\"" + "w3yoRskFIgZceY3WMSjy" + "\"")
+        }
 
+        debug {
+            buildConfigField("String", "API_KEY", "\"" + "w3yoRskFIgZceY3WMSjy" + "\"")
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -37,6 +44,13 @@ android {
         jvmTarget = '1.8'
     }
 
+//    def getApiKey() {
+//        def keysFile = file("keys.properties")
+//        def keysProperties = new Properties()
+//        keysProperties.load(new FileInputStream(keysFile))
+//        def apiKey = keysProperties['API_KEY']
+//        return apiKey
+//    }
 
 }
 

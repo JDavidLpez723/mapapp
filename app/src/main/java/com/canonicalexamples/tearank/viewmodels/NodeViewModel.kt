@@ -1,6 +1,7 @@
 package com.canonicalexamples.tearank.viewmodels
 
 import androidx.lifecycle.*
+import com.canonicalexamples.tearank.BuildConfig
 import com.canonicalexamples.tearank.model.MapDatabase
 import com.canonicalexamples.tearank.model.Node
 import com.canonicalexamples.tearank.util.Event
@@ -55,7 +56,7 @@ class NodeViewModel (private val database: MapDatabase): ViewModel() {
         //BASIC
         //return "https://api.maptiler.com/maps/basic/256/$z/${p.first}/${p.second}.png?key=w3yoRskFIgZceY3WMSjy"
         //Streeets
-        return "https://api.maptiler.com/maps/streets/256/$z/${p.first}/${p.second}.png?key=w3yoRskFIgZceY3WMSjy"
+        return "https://api.maptiler.com/maps/streets/256/$z/${p.first}/${p.second}.png?key=" + BuildConfig.API_KEY
     }
 
     fun getXYTile(lat : Double, lon: Double, zoom : Int) : Pair<Int, Int> {
@@ -75,7 +76,7 @@ class NodeViewModel (private val database: MapDatabase): ViewModel() {
         if (ytile >= (1 shl zoom)) {
             ytile = (1 shl zoom) - 1
         }
-        println("https://a.tile.openstreetmap.org/"+zoom+"/"+xtile+"/"+ytile+".png")
+//        println("https://a.tile.openstreetmap.org/"+zoom+"/"+xtile+"/"+ytile+".png")
         return Pair(xtile, ytile)
     }
 
