@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.canonicalexamples.tearank.databinding.ItemTeaBinding
+import com.canonicalexamples.tearank.databinding.ItemPointBinding
 import com.canonicalexamples.tearank.viewmodels.TeasListViewModel
 
 /**
@@ -25,9 +25,9 @@ import com.canonicalexamples.tearank.viewmodels.TeasListViewModel
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-class TeasListAdapter(private val viewModel: TeasListViewModel): RecyclerView.Adapter<TeasListAdapter.TeaItemViewHolder>() {
+class HistoryAdapter(private val viewModel: TeasListViewModel): RecyclerView.Adapter<HistoryAdapter.TeaItemViewHolder>() {
 
-    class TeaItemViewHolder(private val viewModel: TeasListViewModel, binding: ItemTeaBinding): RecyclerView.ViewHolder(binding.root), View.OnClickListener {
+    class TeaItemViewHolder(private val viewModel: TeasListViewModel, binding: ItemPointBinding): RecyclerView.ViewHolder(binding.root), View.OnClickListener {
         val teaName = binding.teaName
         init {
             binding.root.setOnClickListener(this)
@@ -38,7 +38,7 @@ class TeasListAdapter(private val viewModel: TeasListViewModel): RecyclerView.Ad
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TeaItemViewHolder =
-        TeaItemViewHolder(viewModel, ItemTeaBinding.inflate(LayoutInflater.from(parent.context)))
+        TeaItemViewHolder(viewModel, ItemPointBinding.inflate(LayoutInflater.from(parent.context)))
 
     override fun onBindViewHolder(holder: TeaItemViewHolder, position: Int) {
         val tea = viewModel.getItem(position)
