@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.canonicalexamples.tearank.R
-import com.canonicalexamples.tearank.app.TeaRankApp
+import com.canonicalexamples.tearank.app.MapApp
 import com.canonicalexamples.tearank.databinding.FragmentTeasListBinding
 import com.canonicalexamples.tearank.util.observeEvent
 import com.canonicalexamples.tearank.viewmodels.TeasListViewModel
@@ -18,7 +18,7 @@ class TeasListFragment : Fragment() {
 
     private lateinit var binding: FragmentTeasListBinding
     private val viewModel: TeasListViewModel by viewModels {
-        val app = activity?.application as TeaRankApp
+        val app = activity?.application as MapApp
         TeasListViewModelFactory(app.database, app.webservice)
     }
 

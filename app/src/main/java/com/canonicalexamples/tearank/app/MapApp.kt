@@ -30,7 +30,7 @@ import retrofit2.converter.gson.GsonConverterFactory
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-class TeaRankApp: Application() {
+class MapApp: Application() {
     val database by lazy { TeaDatabase.getInstance(this) }
     val webservice by lazy {
         Retrofit.Builder()
