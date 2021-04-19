@@ -3,6 +3,7 @@ package com.canonicalexamples.tearank.viewmodels
 import androidx.lifecycle.*
 import com.canonicalexamples.tearank.model.MapDatabase
 import com.canonicalexamples.tearank.model.Node
+import com.canonicalexamples.tearank.util.Event
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlin.math.PI
@@ -11,6 +12,9 @@ import kotlin.math.floor
 import kotlin.math.tan
 
 class NodeViewModel (private val database: MapDatabase): ViewModel() {
+
+    private val _go_to_main_fragment: MutableLiveData<Event<Boolean>> = MutableLiveData()
+    val go_to_main_fragment: LiveData<Event<Boolean>> = _go_to_main_fragment
 
     private var _node = MutableLiveData<Node> (Node())
     var node : LiveData<Node> = _node
@@ -26,9 +30,12 @@ class NodeViewModel (private val database: MapDatabase): ViewModel() {
                 _node.postValue(n)
 //                println("node:" + n.tag + " " + n.id)
             }
-
         }
 
+    }
+
+    fun buttonBackClicked(){
+        _go_to_main_fragment.value = Event(true)
     }
 
     fun prueba() = "Ahaha"

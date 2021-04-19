@@ -8,11 +8,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.canonicalexamples.tearank.R
 import com.canonicalexamples.tearank.app.MapApp
 import com.canonicalexamples.tearank.databinding.FragmentNodeBinding
 import com.canonicalexamples.tearank.model.Node
+import com.canonicalexamples.tearank.util.observeEvent
 import com.canonicalexamples.tearank.viewmodels.NodeViewModel
 import com.canonicalexamples.tearank.viewmodels.NodeViewModelFactory
+import com.squareup.picasso.Picasso
 
 class NodeFragment: Fragment(){
 
@@ -38,7 +41,40 @@ class NodeFragment: Fragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.buttonBack.setOnClickListener { print(viewModel.prueba()) }
+        binding.buttonBack.setOnClickListener { viewModel.buttonBackClicked()}
+
+        viewModel.go_to_main_fragment.observeEvent(viewLifecycleOwner){
+            if (it) findNavController().navigate(R.id.action_nodeFragment_to_MainFragment)
+        }
+
+        viewModel.node.observe(viewLifecycleOwner) {
+            binding.titleTextView.setText(it.tag)
+            binding.xTextView.setText(it.x.toString())
+            binding.yTextView.setText(it.y.toString())
+
+            if(it.tag != "") {
+                viewModel.setZoom(10)
+            }
+        }
+
+        viewModel.zoom.observe(viewLifecycleOwner){
+            val z = viewModel.zoom.value ?: -1
+
+            println("Zoom changed to "+z.toString())
+
+            if(z > 0 ){
+                val builder = this.context?.let { Picasso.Builder(it) }
+                if (builder != null) {
+                    //val uri = "https://api.maptiler.com/maps/basic/256/7/63/42.png?key=w3yoRskFIgZceY3WMSjy"
+                    val uri = viewModel.getTileUri()
+                    builder.build().load(uri)
+                        .placeholder(R.drawable.just_grey_light_grey)
+                        .error(R.drawable.error)
+                        .into(binding.iv)
+                }
+
+            }
+        }
 
     }
 

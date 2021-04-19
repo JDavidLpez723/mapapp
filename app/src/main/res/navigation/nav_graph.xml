@@ -31,5 +31,9 @@
     <fragment
         android:id="@+id/nodeFragment"
         android:name="com.canonicalexamples.tearank.view.NodeFragment"
-        android:label="NodeFragment" />
+        android:label="NodeFragment" >
+        <action
+            android:id="@+id/action_nodeFragment_to_MainFragment"
+            app:destination="@id/MainFragment" />
+    </fragment>
 </navigation>
