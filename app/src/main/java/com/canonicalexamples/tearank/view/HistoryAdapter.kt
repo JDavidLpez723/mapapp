@@ -32,6 +32,8 @@ class HistoryAdapter(private val viewModel: HistoryViewModel): RecyclerView.Adap
         init {
             binding.root.setOnClickListener(this)
         }
+
+        //When an item of the adapter list has been clicked:
         override fun onClick(v: View?) {
             viewModel.onClickItem(layoutPosition)
         }
@@ -41,6 +43,7 @@ class HistoryAdapter(private val viewModel: HistoryViewModel): RecyclerView.Adap
         TeaItemViewHolder(viewModel, ItemPointBinding.inflate(LayoutInflater.from(parent.context)))
 
     override fun onBindViewHolder(holder: TeaItemViewHolder, position: Int) {
+        //Get data and fill each item
         val node = viewModel.getItem(position)
         holder.teaName.text = "Position ${node.name}"
     }
