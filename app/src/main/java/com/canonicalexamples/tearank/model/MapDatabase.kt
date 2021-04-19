@@ -23,19 +23,19 @@ import androidx.room.RoomDatabase
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@Database(entities = [Tea::class], version = 1, exportSchema = false)
-abstract class NodeDatabase: RoomDatabase() {
+@Database(entities = [Node::class], version = 1, exportSchema = false)
+abstract class MapDatabase: RoomDatabase() {
     abstract val nodeDao: NodeDao
 
     companion object {
         @Volatile
-        private var INSTANCE: NodeDatabase? = null
-        fun getInstance(context: Context): NodeDatabase {
+        private var INSTANCE: MapDatabase? = null
+        fun getInstance(context: Context): MapDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
-                    NodeDatabase::class.java,
-                    "tea_rank_database"
+                    MapDatabase::class.java,
+                    "map_database"
                 )
                     .fallbackToDestructiveMigration()
                     .build()

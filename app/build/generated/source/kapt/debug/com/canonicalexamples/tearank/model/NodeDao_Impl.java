@@ -11,6 +11,7 @@ import androidx.room.util.CursorUtil;
 import androidx.room.util.DBUtil;
 import androidx.sqlite.db.SupportSQLiteStatement;
 import java.lang.Exception;
+import java.lang.Integer;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
@@ -25,66 +26,68 @@ import kotlin.coroutines.Continuation;
 public final class NodeDao_Impl implements NodeDao {
   private final RoomDatabase __db;
 
-  private final EntityInsertionAdapter<Tea> __insertionAdapterOfTea;
+  private final EntityInsertionAdapter<Node> __insertionAdapterOfNode;
 
-  private final EntityDeletionOrUpdateAdapter<Tea> __updateAdapterOfTea;
+  private final EntityDeletionOrUpdateAdapter<Node> __updateAdapterOfNode;
 
   private final SharedSQLiteStatement __preparedStmtOfDelete;
 
   public NodeDao_Impl(RoomDatabase __db) {
     this.__db = __db;
-    this.__insertionAdapterOfTea = new EntityInsertionAdapter<Tea>(__db) {
+    this.__insertionAdapterOfNode = new EntityInsertionAdapter<Node>(__db) {
       @Override
       public String createQuery() {
-        return "INSERT OR ABORT INTO `tea_table` (`id`,`name`,`rating`) VALUES (nullif(?, 0),?,?)";
+        return "INSERT OR ABORT INTO `node_table` (`id`,`x`,`y`,`tag`) VALUES (nullif(?, 0),?,?,?)";
       }
 
       @Override
-      public void bind(SupportSQLiteStatement stmt, Tea value) {
+      public void bind(SupportSQLiteStatement stmt, Node value) {
         stmt.bindLong(1, value.getId());
-        if (value.getName() == null) {
-          stmt.bindNull(2);
+        stmt.bindDouble(2, value.getX());
+        stmt.bindDouble(3, value.getY());
+        if (value.getTag() == null) {
+          stmt.bindNull(4);
         } else {
-          stmt.bindString(2, value.getName());
+          stmt.bindString(4, value.getTag());
         }
-        stmt.bindLong(3, value.getRating());
       }
     };
-    this.__updateAdapterOfTea = new EntityDeletionOrUpdateAdapter<Tea>(__db) {
+    this.__updateAdapterOfNode = new EntityDeletionOrUpdateAdapter<Node>(__db) {
       @Override
       public String createQuery() {
-        return "UPDATE OR ABORT `tea_table` SET `id` = ?,`name` = ?,`rating` = ? WHERE `id` = ?";
+        return "UPDATE OR ABORT `node_table` SET `id` = ?,`x` = ?,`y` = ?,`tag` = ? WHERE `id` = ?";
       }
 
       @Override
-      public void bind(SupportSQLiteStatement stmt, Tea value) {
+      public void bind(SupportSQLiteStatement stmt, Node value) {
         stmt.bindLong(1, value.getId());
-        if (value.getName() == null) {
-          stmt.bindNull(2);
+        stmt.bindDouble(2, value.getX());
+        stmt.bindDouble(3, value.getY());
+        if (value.getTag() == null) {
+          stmt.bindNull(4);
         } else {
-          stmt.bindString(2, value.getName());
+          stmt.bindString(4, value.getTag());
         }
-        stmt.bindLong(3, value.getRating());
-        stmt.bindLong(4, value.getId());
+        stmt.bindLong(5, value.getId());
       }
     };
     this.__preparedStmtOfDelete = new SharedSQLiteStatement(__db) {
       @Override
       public String createQuery() {
-        final String _query = "DELETE FROM tea_table WHERE id = ?";
+        final String _query = "DELETE FROM node_table WHERE id = ?";
         return _query;
       }
     };
   }
 
   @Override
-  public Object create(final Tea tea, final Continuation<? super Unit> p1) {
+  public Object create(final Node node, final Continuation<? super Unit> p1) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
       public Unit call() throws Exception {
         __db.beginTransaction();
         try {
-          __insertionAdapterOfTea.insert(tea);
+          __insertionAdapterOfNode.insert(node);
           __db.setTransactionSuccessful();
           return Unit.INSTANCE;
         } finally {
@@ -95,13 +98,13 @@ public final class NodeDao_Impl implements NodeDao {
   }
 
   @Override
-  public Object update(final Tea tea, final Continuation<? super Unit> p1) {
+  public Object update(final Node node, final Continuation<? super Unit> p1) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
       public Unit call() throws Exception {
         __db.beginTransaction();
         try {
-          __updateAdapterOfTea.handle(tea);
+          __updateAdapterOfNode.handle(node);
           __db.setTransactionSuccessful();
           return Unit.INSTANCE;
         } finally {
@@ -133,28 +136,31 @@ public final class NodeDao_Impl implements NodeDao {
   }
 
   @Override
-  public Object get(final int id, final Continuation<? super Tea> p1) {
-    final String _sql = "SELECT * FROM tea_table WHERE id = ?";
+  public Object get(final int id, final Continuation<? super Node> p1) {
+    final String _sql = "SELECT * FROM node_table WHERE id = ?";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
     int _argIndex = 1;
     _statement.bindLong(_argIndex, id);
-    return CoroutinesRoom.execute(__db, false, new Callable<Tea>() {
+    return CoroutinesRoom.execute(__db, false, new Callable<Node>() {
       @Override
-      public Tea call() throws Exception {
+      public Node call() throws Exception {
         final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
         try {
           final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
-          final int _cursorIndexOfName = CursorUtil.getColumnIndexOrThrow(_cursor, "name");
-          final int _cursorIndexOfRating = CursorUtil.getColumnIndexOrThrow(_cursor, "rating");
-          final Tea _result;
+          final int _cursorIndexOfX = CursorUtil.getColumnIndexOrThrow(_cursor, "x");
+          final int _cursorIndexOfY = CursorUtil.getColumnIndexOrThrow(_cursor, "y");
+          final int _cursorIndexOfTag = CursorUtil.getColumnIndexOrThrow(_cursor, "tag");
+          final Node _result;
           if(_cursor.moveToFirst()) {
             final int _tmpId;
             _tmpId = _cursor.getInt(_cursorIndexOfId);
-            final String _tmpName;
-            _tmpName = _cursor.getString(_cursorIndexOfName);
-            final int _tmpRating;
-            _tmpRating = _cursor.getInt(_cursorIndexOfRating);
-            _result = new Tea(_tmpId,_tmpName,_tmpRating);
+            final double _tmpX;
+            _tmpX = _cursor.getDouble(_cursorIndexOfX);
+            final double _tmpY;
+            _tmpY = _cursor.getDouble(_cursorIndexOfY);
+            final String _tmpTag;
+            _tmpTag = _cursor.getString(_cursorIndexOfTag);
+            _result = new Node(_tmpId,_tmpX,_tmpY,_tmpTag);
           } else {
             _result = null;
           }
@@ -168,28 +174,97 @@ public final class NodeDao_Impl implements NodeDao {
   }
 
   @Override
-  public Object fetchTeas(final Continuation<? super List<Tea>> p0) {
-    final String _sql = "SELECT * FROM tea_table";
+  public Object fetchNodes(final Continuation<? super List<Node>> p0) {
+    final String _sql = "SELECT * FROM node_table";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 0);
-    return CoroutinesRoom.execute(__db, false, new Callable<List<Tea>>() {
+    return CoroutinesRoom.execute(__db, false, new Callable<List<Node>>() {
       @Override
-      public List<Tea> call() throws Exception {
+      public List<Node> call() throws Exception {
         final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
         try {
           final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
-          final int _cursorIndexOfName = CursorUtil.getColumnIndexOrThrow(_cursor, "name");
-          final int _cursorIndexOfRating = CursorUtil.getColumnIndexOrThrow(_cursor, "rating");
-          final List<Tea> _result = new ArrayList<Tea>(_cursor.getCount());
+          final int _cursorIndexOfX = CursorUtil.getColumnIndexOrThrow(_cursor, "x");
+          final int _cursorIndexOfY = CursorUtil.getColumnIndexOrThrow(_cursor, "y");
+          final int _cursorIndexOfTag = CursorUtil.getColumnIndexOrThrow(_cursor, "tag");
+          final List<Node> _result = new ArrayList<Node>(_cursor.getCount());
           while(_cursor.moveToNext()) {
-            final Tea _item;
+            final Node _item;
             final int _tmpId;
             _tmpId = _cursor.getInt(_cursorIndexOfId);
-            final String _tmpName;
-            _tmpName = _cursor.getString(_cursorIndexOfName);
-            final int _tmpRating;
-            _tmpRating = _cursor.getInt(_cursorIndexOfRating);
-            _item = new Tea(_tmpId,_tmpName,_tmpRating);
+            final double _tmpX;
+            _tmpX = _cursor.getDouble(_cursorIndexOfX);
+            final double _tmpY;
+            _tmpY = _cursor.getDouble(_cursorIndexOfY);
+            final String _tmpTag;
+            _tmpTag = _cursor.getString(_cursorIndexOfTag);
+            _item = new Node(_tmpId,_tmpX,_tmpY,_tmpTag);
             _result.add(_item);
+          }
+          return _result;
+        } finally {
+          _cursor.close();
+          _statement.release();
+        }
+      }
+    }, p0);
+  }
+
+  @Override
+  public Object getLastNode(final Continuation<? super Node> p0) {
+    final String _sql = "SELECT * FROM node_table WHERE id = (SELECT MAX(id) FROM node_table)";
+    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 0);
+    return CoroutinesRoom.execute(__db, false, new Callable<Node>() {
+      @Override
+      public Node call() throws Exception {
+        final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
+        try {
+          final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
+          final int _cursorIndexOfX = CursorUtil.getColumnIndexOrThrow(_cursor, "x");
+          final int _cursorIndexOfY = CursorUtil.getColumnIndexOrThrow(_cursor, "y");
+          final int _cursorIndexOfTag = CursorUtil.getColumnIndexOrThrow(_cursor, "tag");
+          final Node _result;
+          if(_cursor.moveToFirst()) {
+            final int _tmpId;
+            _tmpId = _cursor.getInt(_cursorIndexOfId);
+            final double _tmpX;
+            _tmpX = _cursor.getDouble(_cursorIndexOfX);
+            final double _tmpY;
+            _tmpY = _cursor.getDouble(_cursorIndexOfY);
+            final String _tmpTag;
+            _tmpTag = _cursor.getString(_cursorIndexOfTag);
+            _result = new Node(_tmpId,_tmpX,_tmpY,_tmpTag);
+          } else {
+            _result = null;
+          }
+          return _result;
+        } finally {
+          _cursor.close();
+          _statement.release();
+        }
+      }
+    }, p0);
+  }
+
+  @Override
+  public Object getMaximumId(final Continuation<? super Integer> p0) {
+    final String _sql = "SELECT MAX(id) FROM node_table";
+    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 0);
+    return CoroutinesRoom.execute(__db, false, new Callable<Integer>() {
+      @Override
+      public Integer call() throws Exception {
+        final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
+        try {
+          final Integer _result;
+          if(_cursor.moveToFirst()) {
+            final Integer _tmp;
+            if (_cursor.isNull(0)) {
+              _tmp = null;
+            } else {
+              _tmp = _cursor.getInt(0);
+            }
+            _result = _tmp;
+          } else {
+            _result = null;
           }
           return _result;
         } finally {

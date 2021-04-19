@@ -26,13 +26,23 @@ import androidx.room.Update
 @Dao
 interface NodeDao {
     @Insert
-    suspend fun create(tea: Tea)
-    @Query("SELECT * FROM tea_table WHERE id = :id")
-    suspend fun get(id: Int): Tea?
-    @Query("SELECT * FROM tea_table")
-    suspend fun fetchTeas(): List<Tea>
+    suspend fun create(node: Node)
+
+    @Query("SELECT * FROM node_table WHERE id = :id")
+    suspend fun get(id: Int): Node?
+
+    @Query("SELECT * FROM node_table")
+    suspend fun fetchNodes(): List<Node>
+
     @Update
-    suspend fun update(tea: Tea)
-    @Query("DELETE FROM tea_table WHERE id = :id")
+    suspend fun update(node: Node)
+
+    @Query("DELETE FROM node_table WHERE id = :id")
     suspend fun delete(id: Int)
+
+    @Query("SELECT * FROM node_table WHERE id = (SELECT MAX(id) FROM node_table)")
+    suspend fun getLastNode(): Node?
+
+    @Query("SELECT MAX(id) FROM node_table")
+    suspend fun getMaximumId(): Int?
 }

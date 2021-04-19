@@ -28,7 +28,7 @@ import com.canonicalexamples.tearank.viewmodels.HistoryViewModel
 class HistoryAdapter(private val viewModel: HistoryViewModel): RecyclerView.Adapter<HistoryAdapter.TeaItemViewHolder>() {
 
     class TeaItemViewHolder(private val viewModel: HistoryViewModel, binding: ItemPointBinding): RecyclerView.ViewHolder(binding.root), View.OnClickListener {
-        val teaName = binding.teaName
+        val teaName = binding.itemName
         init {
             binding.root.setOnClickListener(this)
         }
@@ -41,8 +41,8 @@ class HistoryAdapter(private val viewModel: HistoryViewModel): RecyclerView.Adap
         TeaItemViewHolder(viewModel, ItemPointBinding.inflate(LayoutInflater.from(parent.context)))
 
     override fun onBindViewHolder(holder: TeaItemViewHolder, position: Int) {
-        val tea = viewModel.getItem(position)
-        holder.teaName.text = "Wonderful ${tea.name}"
+        val node = viewModel.getItem(position)
+        holder.teaName.text = "Position ${node.name}"
     }
 
     override fun getItemCount(): Int = viewModel.numberOfItems

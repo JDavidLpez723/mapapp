@@ -22,7 +22,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @SuppressWarnings({"unchecked", "deprecation"})
-public final class NodeDatabase_Impl extends NodeDatabase {
+public final class MapDatabase_Impl extends MapDatabase {
   private volatile NodeDao _nodeDao;
 
   @Override
@@ -30,14 +30,14 @@ public final class NodeDatabase_Impl extends NodeDatabase {
     final SupportSQLiteOpenHelper.Callback _openCallback = new RoomOpenHelper(configuration, new RoomOpenHelper.Delegate(1) {
       @Override
       public void createAllTables(SupportSQLiteDatabase _db) {
-        _db.execSQL("CREATE TABLE IF NOT EXISTS `tea_table` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `rating` INTEGER NOT NULL)");
+        _db.execSQL("CREATE TABLE IF NOT EXISTS `node_table` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `x` REAL NOT NULL, `y` REAL NOT NULL, `tag` TEXT NOT NULL)");
         _db.execSQL("CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)");
-        _db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'cf4f5f381083c69c641b5ef0cc69d418')");
+        _db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '04b8358f16033c4a3a5a76cab7c199d9')");
       }
 
       @Override
       public void dropAllTables(SupportSQLiteDatabase _db) {
-        _db.execSQL("DROP TABLE IF EXISTS `tea_table`");
+        _db.execSQL("DROP TABLE IF EXISTS `node_table`");
         if (mCallbacks != null) {
           for (int _i = 0, _size = mCallbacks.size(); _i < _size; _i++) {
             mCallbacks.get(_i).onDestructiveMigration(_db);
@@ -76,22 +76,23 @@ public final class NodeDatabase_Impl extends NodeDatabase {
 
       @Override
       protected RoomOpenHelper.ValidationResult onValidateSchema(SupportSQLiteDatabase _db) {
-        final HashMap<String, TableInfo.Column> _columnsTeaTable = new HashMap<String, TableInfo.Column>(3);
-        _columnsTeaTable.put("id", new TableInfo.Column("id", "INTEGER", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
-        _columnsTeaTable.put("name", new TableInfo.Column("name", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
-        _columnsTeaTable.put("rating", new TableInfo.Column("rating", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
-        final HashSet<TableInfo.ForeignKey> _foreignKeysTeaTable = new HashSet<TableInfo.ForeignKey>(0);
-        final HashSet<TableInfo.Index> _indicesTeaTable = new HashSet<TableInfo.Index>(0);
-        final TableInfo _infoTeaTable = new TableInfo("tea_table", _columnsTeaTable, _foreignKeysTeaTable, _indicesTeaTable);
-        final TableInfo _existingTeaTable = TableInfo.read(_db, "tea_table");
-        if (! _infoTeaTable.equals(_existingTeaTable)) {
-          return new RoomOpenHelper.ValidationResult(false, "tea_table(com.canonicalexamples.tearank.model.Tea).\n"
-                  + " Expected:\n" + _infoTeaTable + "\n"
-                  + " Found:\n" + _existingTeaTable);
+        final HashMap<String, TableInfo.Column> _columnsNodeTable = new HashMap<String, TableInfo.Column>(4);
+        _columnsNodeTable.put("id", new TableInfo.Column("id", "INTEGER", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsNodeTable.put("x", new TableInfo.Column("x", "REAL", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsNodeTable.put("y", new TableInfo.Column("y", "REAL", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsNodeTable.put("tag", new TableInfo.Column("tag", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        final HashSet<TableInfo.ForeignKey> _foreignKeysNodeTable = new HashSet<TableInfo.ForeignKey>(0);
+        final HashSet<TableInfo.Index> _indicesNodeTable = new HashSet<TableInfo.Index>(0);
+        final TableInfo _infoNodeTable = new TableInfo("node_table", _columnsNodeTable, _foreignKeysNodeTable, _indicesNodeTable);
+        final TableInfo _existingNodeTable = TableInfo.read(_db, "node_table");
+        if (! _infoNodeTable.equals(_existingNodeTable)) {
+          return new RoomOpenHelper.ValidationResult(false, "node_table(com.canonicalexamples.tearank.model.Node).\n"
+                  + " Expected:\n" + _infoNodeTable + "\n"
+                  + " Found:\n" + _existingNodeTable);
         }
         return new RoomOpenHelper.ValidationResult(true, null);
       }
-    }, "cf4f5f381083c69c641b5ef0cc69d418", "f81e2bf10aad888007d95bf4a920ae3e");
+    }, "04b8358f16033c4a3a5a76cab7c199d9", "8ea3d8d7f15ba1e745f79da1cbc6ca17");
     final SupportSQLiteOpenHelper.Configuration _sqliteConfig = SupportSQLiteOpenHelper.Configuration.builder(configuration.context)
         .name(configuration.name)
         .callback(_openCallback)
@@ -104,7 +105,7 @@ public final class NodeDatabase_Impl extends NodeDatabase {
   protected InvalidationTracker createInvalidationTracker() {
     final HashMap<String, String> _shadowTablesMap = new HashMap<String, String>(0);
     HashMap<String, Set<String>> _viewTables = new HashMap<String, Set<String>>(0);
-    return new InvalidationTracker(this, _shadowTablesMap, _viewTables, "tea_table");
+    return new InvalidationTracker(this, _shadowTablesMap, _viewTables, "node_table");
   }
 
   @Override
@@ -113,7 +114,7 @@ public final class NodeDatabase_Impl extends NodeDatabase {
     final SupportSQLiteDatabase _db = super.getOpenHelper().getWritableDatabase();
     try {
       super.beginTransaction();
-      _db.execSQL("DELETE FROM `tea_table`");
+      _db.execSQL("DELETE FROM `node_table`");
       super.setTransactionSuccessful();
     } finally {
       super.endTransaction();
