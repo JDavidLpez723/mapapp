@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.canonicalexamples.tearank.databinding.ItemPointBinding
-import com.canonicalexamples.tearank.viewmodels.TeasListViewModel
+import com.canonicalexamples.tearank.viewmodels.HistoryViewModel
 
 /**
  * 20210208. Initial version created by jorge
@@ -25,9 +25,9 @@ import com.canonicalexamples.tearank.viewmodels.TeasListViewModel
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-class HistoryAdapter(private val viewModel: TeasListViewModel): RecyclerView.Adapter<HistoryAdapter.TeaItemViewHolder>() {
+class HistoryAdapter(private val viewModel: HistoryViewModel): RecyclerView.Adapter<HistoryAdapter.TeaItemViewHolder>() {
 
-    class TeaItemViewHolder(private val viewModel: TeasListViewModel, binding: ItemPointBinding): RecyclerView.ViewHolder(binding.root), View.OnClickListener {
+    class TeaItemViewHolder(private val viewModel: HistoryViewModel, binding: ItemPointBinding): RecyclerView.ViewHolder(binding.root), View.OnClickListener {
         val teaName = binding.teaName
         init {
             binding.root.setOnClickListener(this)

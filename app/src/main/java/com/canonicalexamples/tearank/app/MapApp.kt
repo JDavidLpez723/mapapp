@@ -32,12 +32,12 @@ import retrofit2.converter.gson.GsonConverterFactory
  */
 class MapApp: Application() {
     val database by lazy { TeaDatabase.getInstance(this) }
-    val webservice by lazy {
-        Retrofit.Builder()
-            .baseUrl("https://jsonplaceholder.typicode.com/")
-            .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
-            .build().create(TodoService::class.java)
-    }
+//    val webservice by lazy {
+//        Retrofit.Builder()
+//            .baseUrl("https://jsonplaceholder.typicode.com/")
+//            .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
+//            .build().create(TodoService::class.java)
+//    }
     override fun onCreate() {
         super.onCreate()
 

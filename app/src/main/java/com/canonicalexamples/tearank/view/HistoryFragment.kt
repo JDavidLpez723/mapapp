@@ -11,15 +11,15 @@ import com.canonicalexamples.tearank.R
 import com.canonicalexamples.tearank.app.MapApp
 import com.canonicalexamples.tearank.databinding.FragmentHistoryBinding
 import com.canonicalexamples.tearank.util.observeEvent
-import com.canonicalexamples.tearank.viewmodels.TeasListViewModel
-import com.canonicalexamples.tearank.viewmodels.TeasListViewModelFactory
+import com.canonicalexamples.tearank.viewmodels.HistoryViewModel
+import com.canonicalexamples.tearank.viewmodels.HistoryViewModelFactory
 
 class HistoryFragment : Fragment() {
 
     private lateinit var binding: FragmentHistoryBinding
-    private val viewModel: TeasListViewModel by viewModels {
+    private val viewModel: HistoryViewModel by viewModels {
         val app = activity?.application as MapApp
-        TeasListViewModelFactory(app.database, app.webservice)
+        HistoryViewModelFactory(app.database)
     }
 
     override fun onCreateView(
