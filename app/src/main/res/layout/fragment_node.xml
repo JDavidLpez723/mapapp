@@ -27,7 +27,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btaddzoom" />
+        app:layout_constraintTop_toBottomOf="@+id/button_add_zoom" />
 
     <ImageView
         android:id="@+id/iv"
@@ -59,7 +59,7 @@
         app:layout_constraintTop_toBottomOf="@+id/title_textView" />
 
     <Button
-        android:id="@+id/btaddzoom"
+        android:id="@+id/button_add_zoom"
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:layout_marginTop="19dp"
@@ -67,18 +67,18 @@
         android:text="+"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btsubszoom"
+        app:layout_constraintStart_toEndOf="@+id/button_subs_zoom"
         app:layout_constraintTop_toBottomOf="@+id/iv" />
 
     <Button
-        android:id="@+id/btsubszoom"
+        android:id="@+id/button_subs_zoom"
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="19dp"
         android:text="-"
         android:textSize="30sp"
-        app:layout_constraintEnd_toStartOf="@+id/btaddzoom"
+        app:layout_constraintEnd_toStartOf="@+id/button_add_zoom"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iv" />
 </androidx.constraintlayout.widget.ConstraintLayout>
