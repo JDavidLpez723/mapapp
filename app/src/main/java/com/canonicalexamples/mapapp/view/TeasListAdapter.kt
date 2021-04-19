@@ -33,7 +33,7 @@ class TeasListAdapter(private val viewModel: TeasListViewModel): RecyclerView.Ad
             binding.root.setOnClickListener(this)
         }
         override fun onClick(v: View?) {
-            viewModel.onClickItem(layoutPosition)
+//            viewModel.onClickItem(layoutPosition)
         }
     }
 

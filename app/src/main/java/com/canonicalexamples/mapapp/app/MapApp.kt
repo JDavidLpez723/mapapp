@@ -3,7 +3,6 @@ package com.canonicalexamples.mapapp.app
 import android.app.Application
 import com.canonicalexamples.mapapp.model.Node
 import com.canonicalexamples.mapapp.model.MapDatabase
-import com.canonicalexamples.mapapp.model.TodoService
 import com.google.gson.GsonBuilder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -32,21 +31,17 @@ import retrofit2.converter.gson.GsonConverterFactory
  */
 class MapApp: Application() {
     val database by lazy { MapDatabase.getInstance(this) }
-    val webservice by lazy {
-        Retrofit.Builder()
-            .baseUrl("https://jsonplaceholder.typicode.com/")
-            .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
-            .build().create(TodoService::class.java)
-    }
+
     override fun onCreate() {
         super.onCreate()
 
         CoroutineScope(Dispatchers.IO + SupervisorJob()).launch {
             database.clearAllTables()
             database.nodeDao.apply {
-                this.create(node = Node(id = 0, name = "Oolong", rating = 1))
-                this.create(node = Node(id = 1, name = "Pu erh", rating = 1))
-                this.create(node = Node(id = 2, name = "Green tea", rating = 1))
+                this.create(node = Node(id=1, x=40.33224, y=-3.76809, tag="Sabatini Legnaes"))
+                this.create(node = Node(id=2, x=38.34607, y=-0.49059, tag="LUCEROS ALICANTE"))
+                this.create(node = Node(id=3, x=1.0, y=90.0, tag="Parke2"))
+                this.create(node = Node(id=4, x=800.0, y=-1200.0, tag="Parke3"))
             }
         }
     }

@@ -7,11 +7,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.canonicalexamples.mapapp.model.Node
 import com.canonicalexamples.mapapp.model.MapDatabase
-import com.canonicalexamples.mapapp.model.TodoService
 import com.canonicalexamples.mapapp.util.Event
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import retrofit2.await
 
 /**
  * 20210210. Initial version created by jorge
@@ -31,7 +29,7 @@ import retrofit2.await
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-class TeasListViewModel(private val database: MapDatabase, private val webservice: TodoService): ViewModel() {
+class TeasListViewModel(private val database: MapDatabase): ViewModel() {
     private val _navigate: MutableLiveData<Event<Boolean>> = MutableLiveData()
     val navigate: LiveData<Event<Boolean>> = _navigate
     private var teasList = listOf<Node>()
@@ -39,7 +37,7 @@ class TeasListViewModel(private val database: MapDatabase, private val webservic
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            teasList = database.nodeDao.fetchTeas()
+            teasList = database.nodeDao.fetchNodes()
         }
     }
 
@@ -50,22 +48,22 @@ class TeasListViewModel(private val database: MapDatabase, private val webservic
         _navigate.value = Event(true)
     }
 
-    fun getItem(n: Int) = Item(name = teasList[n].name)
+    fun getItem(n: Int) = Item(name = teasList[n].tag)
 
-    fun onClickItem(n: Int) {
-        println("Item $n clicked")
-        viewModelScope.launch(Dispatchers.IO) {
-            val todo = webservice.getTodo(n).await()
-            println("todo: ${todo.title}")
-        }
-    }
+//    fun onClickItem(n: Int) {
+//        println("Item $n clicked")
+//        viewModelScope.launch(Dispatchers.IO) {
+//            val todo = webservice.getTodo(n).await()
+//            println("todo: ${todo.title}")
+//        }
+//    }
 }
 
-class TeasListViewModelFactory(private val database: MapDatabase, private val webservice: TodoService): ViewModelProvider.Factory {
+class TeasListViewModelFactory(private val database: MapDatabase): ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(TeasListViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return TeasListViewModel(database, webservice) as T
+            return TeasListViewModel(database) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
