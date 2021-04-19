@@ -6,11 +6,11 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.canonicalexamples.mapapp.R
 
-class TeaRankActivity : AppCompatActivity() {
+class MapAppActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_tea_rank)
+        setContentView(R.layout.activity_map_app)
         setSupportActionBar(findViewById(R.id.toolbar))
     }
 

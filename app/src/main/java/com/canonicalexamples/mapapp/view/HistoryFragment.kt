@@ -9,14 +9,15 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.canonicalexamples.mapapp.R
 import com.canonicalexamples.mapapp.app.MapApp
-import com.canonicalexamples.mapapp.databinding.FragmentTeasListBinding
+import com.canonicalexamples.mapapp.databinding.FragmentHistoryBinding
+
 import com.canonicalexamples.mapapp.util.observeEvent
 import com.canonicalexamples.mapapp.viewmodels.TeasListViewModel
 import com.canonicalexamples.mapapp.viewmodels.TeasListViewModelFactory
 
-class TeasListFragment : Fragment() {
+class HistoryFragment : Fragment() {
 
-    private lateinit var binding: FragmentTeasListBinding
+    private lateinit var binding: FragmentHistoryBinding
     private val viewModel: TeasListViewModel by viewModels {
         val app = activity?.application as MapApp
         TeasListViewModelFactory(app.database)
@@ -27,14 +28,14 @@ class TeasListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = FragmentTeasListBinding.inflate(inflater, container, false)
+        binding = FragmentHistoryBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.recyclerView.adapter = TeasListAdapter(viewModel = viewModel)
+        binding.recyclerView.adapter = HistoryAdapter(viewModel = viewModel)
         binding.fab.setOnClickListener {
             viewModel.addButtonClicked()
         }

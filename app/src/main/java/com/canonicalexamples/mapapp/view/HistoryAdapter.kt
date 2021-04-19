@@ -25,7 +25,7 @@ import com.canonicalexamples.mapapp.viewmodels.TeasListViewModel
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-class TeasListAdapter(private val viewModel: TeasListViewModel): RecyclerView.Adapter<TeasListAdapter.TeaItemViewHolder>() {
+class HistoryAdapter(private val viewModel: TeasListViewModel): RecyclerView.Adapter<HistoryAdapter.TeaItemViewHolder>() {
 
     class TeaItemViewHolder(private val viewModel: TeasListViewModel, binding: ItemTeaBinding): RecyclerView.ViewHolder(binding.root), View.OnClickListener {
         val teaName = binding.teaName
