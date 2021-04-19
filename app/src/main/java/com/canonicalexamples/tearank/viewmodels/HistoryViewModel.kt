@@ -10,6 +10,10 @@ import com.canonicalexamples.tearank.model.MapDatabase
 import com.canonicalexamples.tearank.util.Event
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlin.math.PI
+import kotlin.math.asinh
+import kotlin.math.floor
+import kotlin.math.tan
 
 /**
  * 20210210. Initial version created by jorge
@@ -32,6 +36,8 @@ import kotlinx.coroutines.launch
 class HistoryViewModel(private val database: MapDatabase): ViewModel() {
     private val _navigate: MutableLiveData<Event<Boolean>> = MutableLiveData()
     val navigate: LiveData<Event<Boolean>> = _navigate
+
+
     private var nodesList = listOf<Node>()
     data class Item(val name: String)
 
@@ -59,6 +65,30 @@ class HistoryViewModel(private val database: MapDatabase): ViewModel() {
 //            println("todo: ${todo.title}")
 //        }
     }
+
+
+
+    fun getXYTile(lat : Double, lon: Double, zoom : Int) : Pair<Int, Int> {
+        val latRad = Math.toRadians(lat)
+        var xtile = floor( (lon + 180) / 360 * (1 shl zoom) ).toInt()
+        var ytile = floor( (1.0 - asinh(tan(latRad)) / PI) / 2 * (1 shl zoom) ).toInt()
+
+        if (xtile < 0) {
+            xtile = 0
+        }
+        if (xtile >= (1 shl zoom)) {
+            xtile= (1 shl zoom) - 1
+        }
+        if (ytile < 0) {
+            ytile = 0
+        }
+        if (ytile >= (1 shl zoom)) {
+            ytile = (1 shl zoom) - 1
+        }
+        println("https://a.tile.openstreetmap.org/"+zoom+"/"+xtile+"/"+ytile+".png")
+        return Pair(xtile, ytile)
+    }
+
 }
 
 class HistoryViewModelFactory(private val database: MapDatabase): ViewModelProvider.Factory {
