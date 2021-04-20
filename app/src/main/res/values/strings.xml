@@ -15,5 +15,8 @@
     <string name="pass">Password</string>
     <string name="login">LOGIN</string>
     <string name="register">REGISTER</string>
+    <string name="set_parking">SET PARKING</string>
+    <string name="find_my_car">FIND MY CAR</string>
+    <string name="history">History</string>
 
 </resources>
