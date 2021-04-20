@@ -9,10 +9,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.canonicalexamples.tearank.R
 import com.canonicalexamples.tearank.app.MapApp
-import com.canonicalexamples.tearank.databinding.FragmentHistoryBinding
 import com.canonicalexamples.tearank.databinding.FragmentLoginBinding
 import com.canonicalexamples.tearank.util.observeEvent
-import com.canonicalexamples.tearank.viewmodels.HistoryViewModel
 import com.canonicalexamples.tearank.viewmodels.LoginViewModel
 import com.canonicalexamples.tearank.viewmodels.LoginViewModelFactory
 
@@ -47,22 +45,21 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.LoginBLoginFragment.setOnClickListener {
-            //viewModel.addButtonClicked1()
+            viewModel.button1Clicked()
         }
         binding.RegisterBLoginFragment.setOnClickListener {
-            //viewModel.addButtonClicked2()
+            viewModel.button2Clicked()
         }
 
-     /*   viewModel.go_to_main_fragment.observeEvent(viewLifecycleOwner) {
+        viewModel.go_to_main_fragment.observeEvent(viewLifecycleOwner) {
             if(it) {
-                findNavController().navigate(R.id.action_MainFragment_to_HistoryFragment)
+                findNavController().navigate(R.id.action_loginFragment_to_MainFragment)
             }
         }
-        viewModel.go_to_reg_fragment.observeEvent(viewLifecycleOwner) { navigate ->
+        viewModel.go_to_reg_fragment.observeEvent(viewLifecycleOwner) {
             if(it) {
-                findNavController().navigate(R.id.action_MainFragment_to_HistoryFragment)
+                findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
             }
-        }*/
+        }
     }
 }
-.

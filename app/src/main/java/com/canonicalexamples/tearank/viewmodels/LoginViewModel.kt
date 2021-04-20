@@ -1,15 +1,32 @@
 package com.canonicalexamples.tearank.viewmodels
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.canonicalexamples.tearank.model.MapDatabase
+import com.canonicalexamples.tearank.util.Event
 import java.security.KeyStore
 import javax.crypto.Cipher
 import javax.crypto.SecretKey
 import javax.crypto.spec.IvParameterSpec
 
 class LoginViewModel (private val database: MapDatabase): ViewModel() {
+    private val _go_to_main_fragment: MutableLiveData<Event<Boolean>> = MutableLiveData()
+    val go_to_main_fragment: LiveData<Event<Boolean>> = _go_to_main_fragment
 
+    private val _go_to_reg_fragment: MutableLiveData<Event<Boolean>> = MutableLiveData()
+    val go_to_reg_fragment: LiveData<Event<Boolean>> = _go_to_reg_fragment
+
+    //Button1 (Goes to Main Fragment)
+    fun button1Clicked(){
+        _go_to_main_fragment.value = Event(true)
+    }
+
+    //Button2 (Goes to Register Fragment)
+    fun button2Clicked(){
+        _go_to_reg_fragment.value = Event(true)
+    }
 
     fun encryptData(data: String): Pair<ByteArray, ByteArray> {
         val cipher: Cipher = Cipher.getInstance("AES/CBC/NoPadding")
