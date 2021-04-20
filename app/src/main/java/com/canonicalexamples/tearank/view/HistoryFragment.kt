@@ -13,6 +13,7 @@ import com.canonicalexamples.tearank.databinding.FragmentHistoryBinding
 import com.canonicalexamples.tearank.util.observeEvent
 import com.canonicalexamples.tearank.viewmodels.HistoryViewModel
 import com.canonicalexamples.tearank.viewmodels.HistoryViewModelFactory
+import com.canonicalexamples.tearank.viewmodels.LoginViewModel
 import com.canonicalexamples.tearank.viewmodels.LoginViewModelFactory
 
 class HistoryFragment : Fragment() {
@@ -22,6 +23,13 @@ class HistoryFragment : Fragment() {
         val app = activity?.application as MapApp
         HistoryViewModelFactory(app.database)
     }
+
+    //Pruebas
+    private val viewModel2: LoginViewModel by viewModels {
+        val app = activity?.application as MapApp
+        LoginViewModelFactory(app.database)
+    }
+    //
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,5 +53,9 @@ class HistoryFragment : Fragment() {
                 findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
             }
         }
+
+        //Pruebas
+        //view
+        //
     }
 }
