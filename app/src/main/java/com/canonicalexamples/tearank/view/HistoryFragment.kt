@@ -12,14 +12,14 @@ import com.canonicalexamples.tearank.app.MapApp
 import com.canonicalexamples.tearank.databinding.FragmentHistoryBinding
 import com.canonicalexamples.tearank.util.observeEvent
 import com.canonicalexamples.tearank.viewmodels.HistoryViewModel
-import com.canonicalexamples.tearank.viewmodels.HistoryViewModelFactory
+import com.canonicalexamples.tearank.viewmodels.LoginViewModelFactory
 
 class HistoryFragment : Fragment() {
 
     private lateinit var binding: FragmentHistoryBinding
     private val viewModel: HistoryViewModel by viewModels {
         val app = activity?.application as MapApp
-        HistoryViewModelFactory(app.database)
+        LoginViewModelFactory(app.database)
     }
 
     override fun onCreateView(
