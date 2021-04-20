@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.canonicalexamples.tearank.databinding.FragmentLoginBinding
 import com.canonicalexamples.tearank.model.MapDatabase
 import com.canonicalexamples.tearank.util.Event
 import java.security.KeyStore
@@ -18,14 +19,25 @@ class LoginViewModel (private val database: MapDatabase): ViewModel() {
     private val _go_to_reg_fragment: MutableLiveData<Event<Boolean>> = MutableLiveData()
     val go_to_reg_fragment: LiveData<Event<Boolean>> = _go_to_reg_fragment
 
-    //Button1 (Goes to Main Fragment)
-    fun button1Clicked(){
+    private lateinit var mailLogin: String
+    private lateinit var passLogin: String
+
+    //Goes to Main Fragment
+    fun navigate1(){
         _go_to_main_fragment.value = Event(true)
     }
 
-    //Button2 (Goes to Register Fragment)
-    fun button2Clicked(){
+    //Goes to Register Fragment
+    fun navigate2(){
         _go_to_reg_fragment.value = Event(true)
+    }
+
+    //Button LoginBLoginFragment (Obtain email and password from login input)
+    fun getLogin(mail:String, pass:String){
+        mailLogin = mail
+        passLogin = pass
+        println(mailLogin)
+        println(passLogin)
     }
 
     fun encryptData(data: String): Pair<ByteArray, ByteArray> {

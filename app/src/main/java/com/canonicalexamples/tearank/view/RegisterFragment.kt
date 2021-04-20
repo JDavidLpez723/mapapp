@@ -44,7 +44,8 @@ class RegisterFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.RegisterBRegisterFragment.setOnClickListener {
-            viewModel.button1Clicked()
+            viewModel.getRegister(binding.mailRegisterFragment.text.toString(),binding.passRegisterFragment.text.toString())
+            viewModel.navigate1()
         }
 
         viewModel.go_to_main_fragment.observeEvent(viewLifecycleOwner) {

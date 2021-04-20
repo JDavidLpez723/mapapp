@@ -45,10 +45,11 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.LoginBLoginFragment.setOnClickListener {
-            viewModel.button1Clicked()
+            viewModel.getLogin(binding.mailLoginFragment.text.toString(),binding.passLoginFragment.text.toString())
+            viewModel.navigate1()
         }
         binding.RegisterBLoginFragment.setOnClickListener {
-            viewModel.button2Clicked()
+            viewModel.navigate2()
         }
 
         viewModel.go_to_main_fragment.observeEvent(viewLifecycleOwner) {

@@ -44,9 +44,6 @@ class HistoryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.recyclerView.adapter = HistoryAdapter(viewModel = viewModel)
-        binding.fab.setOnClickListener {
-            viewModel.addButtonClicked()
-        }
 
         viewModel.navigate.observeEvent(viewLifecycleOwner) { navigate ->
             if (navigate) {
