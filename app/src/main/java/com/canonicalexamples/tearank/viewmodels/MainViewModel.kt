@@ -14,10 +14,12 @@ class MainViewModel (private val database: MapDatabase): ViewModel() {
     private val _go_to_history_fragment: MutableLiveData<Event<Boolean>> = MutableLiveData()
     val go_to_history_fragment: LiveData<Event<Boolean>> = _go_to_history_fragment
 
+    private val _set_parking: MutableLiveData<Event<Boolean>> = MutableLiveData()
+    val set_parking: LiveData<Event<Boolean>> = _set_parking
 
     //Button1 (Sets parking location)
     fun button1Clicked(){
-
+        _set_parking.value = Event(true)
     }
 
     //Button2 (Goes to Node Fragment)
