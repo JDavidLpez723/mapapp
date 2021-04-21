@@ -23,13 +23,13 @@ class NodeFragment: Fragment(){
     private lateinit var binding: FragmentNodeBinding
 
     //Recieve arguments (itemSelected)
-//    val args: NodeFragmentArgs by navArgs()
+    val args: NodeFragmentArgs by navArgs()
 
     private var myNode: Node? = null
 
     private val viewModel: NodeViewModel by viewModels {
         val app = activity?.application as MapApp
-        NodeViewModelFactory(app.database)
+        NodeViewModelFactory(app.database, args.itemSelected+1)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?

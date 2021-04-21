@@ -12,7 +12,7 @@ import kotlin.math.asinh
 import kotlin.math.floor
 import kotlin.math.tan
 
-class NodeViewModel (private val database: MapDatabase): ViewModel() {
+class NodeViewModel (private val database: MapDatabase, private val itemSelected: Int): ViewModel() {
 
     private val _go_to_main_fragment: MutableLiveData<Event<Boolean>> = MutableLiveData()
     val go_to_main_fragment: LiveData<Event<Boolean>> = _go_to_main_fragment
@@ -28,7 +28,7 @@ class NodeViewModel (private val database: MapDatabase): ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             val n = database.nodeDao.getLastNode()
             n?.let {
-                _node.postValue(n)
+                _node.postValue(n!!)
 //                println("node:" + n.tag + " " + n.id)
             }
         }
@@ -82,11 +82,11 @@ class NodeViewModel (private val database: MapDatabase): ViewModel() {
 
 }
 
-class NodeViewModelFactory(private val database: MapDatabase): ViewModelProvider.Factory {
+class NodeViewModelFactory(private val database: MapDatabase, private val itemSelected: Int): ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(NodeViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return NodeViewModel(database) as T
+            return NodeViewModel(database, itemSelected) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

@@ -24,12 +24,6 @@ class HistoryFragment : Fragment() {
         HistoryViewModelFactory(app.database)
     }
 
-    //Pruebas
-    private val viewModel2: LoginViewModel by viewModels {
-        val app = activity?.application as MapApp
-        LoginViewModelFactory(app.database)
-    }
-    //
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,14 +39,15 @@ class HistoryFragment : Fragment() {
 
         binding.recyclerView.adapter = HistoryAdapter(viewModel = viewModel)
 
-        viewModel.navigate.observeEvent(viewLifecycleOwner) { navigate ->
-            if (navigate) {
-                findNavController().navigate(R.id.action_HistoryFragment_to_nodeFragment)
+        viewModel.go_to_node_fragment.observeEvent(viewLifecycleOwner) {
+            if (it) {
+
+                val action = HistoryFragmentDirections.actionHistoryFragmentToNodeFragment()
+                        .setItemSelected(viewModel.itemSelected)
+                findNavController().navigate(action)
             }
         }
 
-        //Pruebas
-        //view
-        //
+
     }
 }

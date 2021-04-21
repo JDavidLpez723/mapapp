@@ -34,9 +34,10 @@ import kotlin.math.tan
  * limitations under the License.
  */
 class HistoryViewModel(private val database: MapDatabase): ViewModel() {
-    private val _navigate: MutableLiveData<Event<Boolean>> = MutableLiveData()
-    val navigate: LiveData<Event<Boolean>> = _navigate
+    private val _go_to_node_fragment: MutableLiveData<Event<Boolean>> = MutableLiveData()
+    val go_to_node_fragment: LiveData<Event<Boolean>> = _go_to_node_fragment
 
+    var itemSelected = -1
 
     private var nodesList = listOf<Node>()
     data class Item(val name: String)
@@ -51,7 +52,7 @@ class HistoryViewModel(private val database: MapDatabase): ViewModel() {
         get() = nodesList.count()
 
     fun addButtonClicked() {
-        _navigate.value = Event(true)
+//        _navigate.value = Event(true)
     }
 
     fun getItem(n: Int) = Item(name = nodesList[n].x.toString() + ", " + nodesList[n].y.toString()
@@ -59,11 +60,9 @@ class HistoryViewModel(private val database: MapDatabase): ViewModel() {
     fun getNode(i: Int): Node = nodesList[i]
 
     fun onClickItem(n: Int) {
-        println("Item $n clicked")
-//        viewModelScope.launch(Dispatchers.IO) {
-//            val todo = webservice.getTodo(n).await()
-//            println("todo: ${todo.title}")
-//        }
+//        println("Item $n clicked")
+        itemSelected = n
+        _go_to_node_fragment.value = Event(true)
     }
 
 
