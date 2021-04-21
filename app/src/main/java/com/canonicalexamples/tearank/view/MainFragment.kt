@@ -50,7 +50,6 @@ class MainFragment : Fragment() {
         val app = activity?.application as MapApp
         MainViewModelFactory(app.database)
     }
-    var node_id=0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -59,6 +58,7 @@ class MainFragment : Fragment() {
         val context by lazy {
             activity?.application as MapApp
         }
+        val app = activity?.application as MapApp
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
         binding = FragmentMainBinding.inflate(inflater, container, false)
 
@@ -89,10 +89,6 @@ class MainFragment : Fragment() {
                 val app = activity?.application as MapApp
                 app.baseContext
             }
-            CoroutineScope(Dispatchers.IO + SupervisorJob()).launch {
-                node_id = if (database.nodeDao.getMaximumId() != null) database.nodeDao.getMaximumId()!! else 0
-                node_id++
-            }
 
             if (it) {
 
@@ -116,7 +112,7 @@ class MainFragment : Fragment() {
                             println(location.longitude)
                             CoroutineScope(Dispatchers.IO + SupervisorJob()).launch {
                                 database.nodeDao.apply {
-                                    this.create(node = Node(id = node_id, x = location.latitude, y = location.longitude, tag = "Parking "+node_id))
+                                    this.create(node = Node(id = 3, x = location.latitude, y = location.longitude, tag = "Butarque"))
                                 }
                             }
                         }
