@@ -26,10 +26,16 @@ class NodeViewModel (private val database: MapDatabase, private val itemSelected
     //Get last node
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            val n = database.nodeDao.getLastNode()
-            n?.let {
-                _node.postValue(n!!)
+            if(itemSelected==-1) {
+                val n = database.nodeDao.getLastNode()
+                n?.let {
+                    _node.postValue(n!!)
 //                println("node:" + n.tag + " " + n.id)
+                }
+            }
+            else{
+                val n = database.nodeDao.get(itemSelected)
+                if(n!=null) _node.postValue(n!!)
             }
         }
 
