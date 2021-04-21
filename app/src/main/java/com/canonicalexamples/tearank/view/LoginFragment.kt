@@ -14,10 +14,6 @@ import com.canonicalexamples.tearank.databinding.FragmentLoginBinding
 import com.canonicalexamples.tearank.util.observeEvent
 import com.canonicalexamples.tearank.viewmodels.LoginViewModel
 import com.canonicalexamples.tearank.viewmodels.LoginViewModelFactory
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.launch
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -51,7 +47,7 @@ class LoginFragment : Fragment() {
 
         binding.LoginBLoginFragment.setOnClickListener {
             viewModel.getLogin(binding.mailLoginFragment.text.toString(),binding.passLoginFragment.text.toString())
-
+            //viewModel.navigate1()
         }
         binding.RegisterBLoginFragment.setOnClickListener {
             viewModel.navigate2()
