@@ -41,7 +41,7 @@ class NodeFragment: Fragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-    //pruyba
+
         binding.buttonBack.setOnClickListener { viewModel.buttonBackClicked()}
 
         viewModel.go_to_main_fragment.observeEvent(viewLifecycleOwner){
