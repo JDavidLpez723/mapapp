@@ -51,6 +51,7 @@ class LoginViewModel (private val database: MapDatabase): ViewModel() {
         viewModelScope.launch(Dispatchers.IO){
             val u = database.userDao.get(mail)
             if(u!=null) {
+                //USER EXISTS
                 val c = u.password.split(':')
                 val saltEnc = c[1]
                 val salt = Base64.decode(saltEnc, Base64.DEFAULT)
@@ -65,6 +66,7 @@ class LoginViewModel (private val database: MapDatabase): ViewModel() {
                 }
 
             } else{
+                //USER WITH THAT EMAIL DOES NOT EXIST
 //                Toast.makeText()
             }
         }
