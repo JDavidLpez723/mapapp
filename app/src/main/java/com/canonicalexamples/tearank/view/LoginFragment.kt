@@ -59,6 +59,13 @@ class LoginFragment : Fragment() {
                 findNavController().navigate(R.id.action_loginFragment_to_MainFragment)
             }
         }
+
+        viewModel.incorrect_credentials.observeEvent(viewLifecycleOwner) {
+            if (it) {
+                Toast.makeText(activity, "Sorry, wrong credentials. Try again.", Toast.LENGTH_LONG).show()
+            }
+        }
+
         viewModel.go_to_reg_fragment.observeEvent(viewLifecycleOwner) {
             if(it) {
                 findNavController().navigate(R.id.action_loginFragment_to_registerFragment)

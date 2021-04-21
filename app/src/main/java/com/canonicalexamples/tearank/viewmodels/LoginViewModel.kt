@@ -69,9 +69,10 @@ class LoginViewModel (private val database: MapDatabase): ViewModel() {
                     _incorrect_credentials.postValue(Event(true))
                 }
 
-            } else{
+            } else {
                 //USER WITH THAT EMAIL DOES NOT EXIST
-                _user_not_found.postValue(Event(true))
+                println("LOGIN INCORRECT")
+                _incorrect_credentials.postValue(Event(true))
             }
         }
 
