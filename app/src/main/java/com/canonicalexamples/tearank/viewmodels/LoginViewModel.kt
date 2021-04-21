@@ -23,11 +23,14 @@ class LoginViewModel (private val database: MapDatabase): ViewModel() {
     private val _go_to_reg_fragment: MutableLiveData<Event<Boolean>> = MutableLiveData()
     val go_to_reg_fragment: LiveData<Event<Boolean>> = _go_to_reg_fragment
 
+    private val _incorrect_credentials: MutableLiveData<Event<Boolean>> = MutableLiveData()
+    val incorrect_credentials: LiveData<Event<Boolean>> = _incorrect_credentials
+
+    private val _user_not_found: MutableLiveData<Event<Boolean>> = MutableLiveData()
+    val user_not_found: LiveData<Event<Boolean>> = _user_not_found
 
     private lateinit var mailLogin: String
     private lateinit var passLogin: String
-
-    private val user_Exists: MutableLiveData<Event<Boolean>> = MutableLiveData()
 
     //Goes to Main Fragment
 //    fun navigate1(){
@@ -60,14 +63,15 @@ class LoginViewModel (private val database: MapDatabase): ViewModel() {
 
                 if(c[0]==result.first) {
                     println("LOGIN CORRECT")
-                    //_go_to_main_fragment.value = Event(true)
+                    _go_to_main_fragment.postValue(Event(true))
                 }else {
                     println("LOGIN INCORRECT")
+                    _incorrect_credentials.postValue(Event(true))
                 }
 
             } else{
                 //USER WITH THAT EMAIL DOES NOT EXIST
-//                Toast.makeText()
+                _user_not_found.postValue(Event(true))
             }
         }
 

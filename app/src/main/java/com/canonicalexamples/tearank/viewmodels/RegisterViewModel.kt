@@ -37,10 +37,7 @@ class RegisterViewModel (private val database: MapDatabase): ViewModel()  {
         val itCount = 12000
 
         val result = hashText(pass, salt, itCount, 256*8)
-//        println("Result:")
-//        print(result)
-//        println("Salt:")
-//        print(saltencoded)
+
 
         viewModelScope.launch (Dispatchers.IO){
             database.userDao.create(User(email = mail, password = result.first+":"+result.second))
