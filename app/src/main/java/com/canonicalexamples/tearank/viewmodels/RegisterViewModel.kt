@@ -35,20 +35,15 @@ class RegisterViewModel (private val database: MapDatabase): ViewModel()  {
         random.nextBytes(salt)
 
         val itCount = 12000
-        val pbKeySpec = PBEKeySpec(pass.toCharArray(), salt, itCount, 256*8) // 1
-        val secretKeyFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256") // 2
-        val key = secretKeyFactory.generateSecret(pbKeySpec)
 
-        val result = Base64.encodeToString(key.encoded, Base64.DEFAULT)
-        val saltencoded = Base64.encodeToString(salt, Base64.DEFAULT)
-
+        val result = hashText(pass, salt, itCount, 256*8)
 //        println("Result:")
 //        print(result)
 //        println("Salt:")
 //        print(saltencoded)
 
         viewModelScope.launch (Dispatchers.IO){
-            database.userDao.create(User(email = mail, password = result+":"+saltencoded))
+            database.userDao.create(User(email = mail, password = result.first+":"+result.second))
             val user = database.userDao.get(mail)
             print(user.toString())
         }
@@ -63,6 +58,16 @@ class RegisterViewModel (private val database: MapDatabase): ViewModel()  {
 //        val secRamdom = SecureRandom.getInstance()
 //
 //        secRamdom.nextBytes(salt)
+    }
+
+    fun hashText(password: String, salt: ByteArray, iterations: Int, keyLength: Int ) : Pair<String, String>{
+        val pbKeySpec = PBEKeySpec(password.toCharArray(), salt, iterations, keyLength) // 1
+        val secretKeyFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256") // 2
+        val key = secretKeyFactory.generateSecret(pbKeySpec)
+
+        val result = Base64.encodeToString(key.encoded, Base64.DEFAULT).dropLast(1)
+        val saltencoded = Base64.encodeToString(salt, Base64.DEFAULT).dropLast(1)
+        return Pair(result,saltencoded)
     }
 
 }

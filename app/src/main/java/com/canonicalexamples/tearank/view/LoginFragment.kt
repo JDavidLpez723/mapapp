@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.canonicalexamples.tearank.R
@@ -46,7 +47,7 @@ class LoginFragment : Fragment() {
 
         binding.LoginBLoginFragment.setOnClickListener {
             viewModel.getLogin(binding.mailLoginFragment.text.toString(),binding.passLoginFragment.text.toString())
-            viewModel.navigate1()
+            //viewModel.navigate1()
         }
         binding.RegisterBLoginFragment.setOnClickListener {
             viewModel.navigate2()
@@ -54,6 +55,7 @@ class LoginFragment : Fragment() {
 
         viewModel.go_to_main_fragment.observeEvent(viewLifecycleOwner) {
             if(it) {
+                //Toast.makeText(this,"Prueba",Toast.LENGTH_SHORT)
                 findNavController().navigate(R.id.action_loginFragment_to_MainFragment)
             }
         }

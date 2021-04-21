@@ -1,16 +1,20 @@
 package com.canonicalexamples.tearank.viewmodels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import android.util.Base64
+import android.widget.Toast
+import androidx.lifecycle.*
 import com.canonicalexamples.tearank.databinding.FragmentLoginBinding
 import com.canonicalexamples.tearank.model.MapDatabase
 import com.canonicalexamples.tearank.util.Event
+import com.canonicalexamples.tearank.util.observeEvent
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.security.KeyStore
 import javax.crypto.Cipher
 import javax.crypto.SecretKey
+import javax.crypto.SecretKeyFactory
 import javax.crypto.spec.IvParameterSpec
+import javax.crypto.spec.PBEKeySpec
 
 class LoginViewModel (private val database: MapDatabase): ViewModel() {
     private val _go_to_main_fragment: MutableLiveData<Event<Boolean>> = MutableLiveData()
@@ -19,18 +23,23 @@ class LoginViewModel (private val database: MapDatabase): ViewModel() {
     private val _go_to_reg_fragment: MutableLiveData<Event<Boolean>> = MutableLiveData()
     val go_to_reg_fragment: LiveData<Event<Boolean>> = _go_to_reg_fragment
 
+
     private lateinit var mailLogin: String
     private lateinit var passLogin: String
 
+    private val user_Exists: MutableLiveData<Event<Boolean>> = MutableLiveData()
+
     //Goes to Main Fragment
-    fun navigate1(){
-        _go_to_main_fragment.value = Event(true)
-    }
+//    fun navigate1(){
+//        _go_to_main_fragment.value = Event(true)
+//    }
 
     //Goes to Register Fragment
     fun navigate2(){
         _go_to_reg_fragment.value = Event(true)
     }
+
+
 
     //Button LoginBLoginFragment (Obtain email and password from login input)
     fun getLogin(mail:String, pass:String){
@@ -38,44 +47,43 @@ class LoginViewModel (private val database: MapDatabase): ViewModel() {
         passLogin = pass
         println(mailLogin)
         println(passLogin)
+
+        viewModelScope.launch(Dispatchers.IO){
+            val u = database.userDao.get(mail)
+            if(u!=null) {
+                val c = u.password.split(':')
+                val saltEnc = c[1]
+                val salt = Base64.decode(saltEnc, Base64.DEFAULT)
+
+                val result = hashText(pass, salt, 12000, 256*8)
+
+                if(c[0]==result.first) {
+                    println("LOGIN CORRECT")
+                    //_go_to_main_fragment.value = Event(true)
+                }else {
+                    println("LOGIN INCORRECT")
+                }
+
+            } else{
+//                Toast.makeText()
+            }
+        }
+
+
+
+
     }
 
+    fun hashText(password: String, salt: ByteArray, iterations: Int, keyLength: Int ) : Pair<String, String>{
+        val pbKeySpec = PBEKeySpec(password.toCharArray(), salt, iterations, keyLength) // 1
+        val secretKeyFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256") // 2
+        val key = secretKeyFactory.generateSecret(pbKeySpec)
 
-    fun encryptData(data: String): Pair<ByteArray, ByteArray> {
-        val cipher: Cipher = Cipher.getInstance("AES/CBC/NoPadding")
-
-        var temp: String = data
-        while (temp.toByteArray().size % 16 != 0)
-            temp += "\u0020"
-
-        cipher.init(Cipher.ENCRYPT_MODE, getKey())
-
-        val ivBytes = cipher.iv
-
-        val encryptedBytes = cipher.doFinal(temp.toByteArray())
-
-        return Pair(ivBytes, encryptedBytes)
+        val result = Base64.encodeToString(key.encoded, Base64.DEFAULT).dropLast(1)
+        val saltencoded = Base64.encodeToString(salt, Base64.DEFAULT).dropLast(1)
+        return Pair(result,saltencoded)
     }
 
-    fun checkKey(): Boolean {
-        val keystore: KeyStore = KeyStore.getInstance("AndroidKeyStore")
-        keystore.load(null)
-        val secretKeyEntry = keystore.getEntry("MyKeyStore", null) as KeyStore.SecretKeyEntry
-        return secretKeyEntry.secretKey != null
-    }
-    fun getKey(): SecretKey {
-        val keystore: KeyStore = KeyStore.getInstance("AndroidKeyStore")
-        keystore.load(null)
-        val secretKeyEntry = keystore.getEntry("MyKeyStore", null) as KeyStore.SecretKeyEntry
-        return secretKeyEntry.secretKey
-    }
-
-    fun decryptData(ivBytes: ByteArray, data: ByteArray): String{
-        val cipher = Cipher.getInstance("AES/CBC/NoPadding")
-        val spec = IvParameterSpec(ivBytes)
-        cipher.init(Cipher.DECRYPT_MODE, getKey(), spec)
-        return cipher.doFinal(data).toString(Charsets.UTF_8).trim()
-    }
 
 }
 
