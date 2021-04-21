@@ -50,8 +50,6 @@ class MainFragment : Fragment() {
         val app = activity?.application as MapApp
         MainViewModelFactory(app.database)
     }
-    private var node_id= 0
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -93,10 +91,6 @@ class MainFragment : Fragment() {
             }
 
             if (it) {
-                    CoroutineScope(Dispatchers.IO + SupervisorJob()).launch {
-                        node_id = if (database.nodeDao.getMaximumId() != null) database.nodeDao.getMaximumId()!! else 0
-                        node_id++
-                    }
 
                     if (ActivityCompat.checkSelfPermission(
                             baseContext,
@@ -118,7 +112,7 @@ class MainFragment : Fragment() {
                             println(location.longitude)
                             CoroutineScope(Dispatchers.IO + SupervisorJob()).launch {
                                 database.nodeDao.apply {
-                                    this.create(node = Node(id = node_id, x = location.latitude, y = location.longitude, tag = "Parking "+node_id))
+                                    this.create(node = Node(id = 3, x = location.latitude, y = location.longitude, tag = "Butarque"))
                                 }
                             }
                         }
@@ -141,4 +135,95 @@ class MainFragment : Fragment() {
             }
         }
     }
+
+    fun getLastKnownLocation() {
+        val app = activity?.application as MapApp
+        when {
+            ContextCompat.checkSelfPermission(app, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED -> {
+                // You can use the API that requires the permission.
+            }
+            else -> {
+                // You can directly ask for the permission.
+                // The registered ActivityResultCallback gets the result of this request.
+                requestPermissionLauncher.launch(
+                    Manifest.permission.ACCESS_FINE_LOCATION)
+            }
+        }
+
+
+        if (ActivityCompat.checkSelfPermission(
+                app,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                app,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            println("It didn't work")
+
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return
+        }
+        fusedLocationClient.lastLocation
+            .addOnSuccessListener { location : Location? ->
+                // Got last known location. In some rare situations this can be null.
+                if (location != null) {
+                    println("It worked")
+                    println(location.latitude)
+                    println(location.longitude)
+
+                }
+                else{
+                    println("It didn't work")
+                }
+            }
+    }
+    /*fun getLastKnownLocation() {
+        fusedLocationClient.lastLocation
+            .addOnSuccessListener { location : Location? ->
+                // Got last known location. In some rare situations this can be null.
+            }
+
+        println("hola")
+        println(fusedLocationClient.lastLocation)
+        val app = activity?.application as MapApp
+        if (ActivityCompat.checkSelfPermission(
+                app.applicationContext,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                app.applicationContext,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            println("Permissions are not granted")
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return
+        }
+        println(fusedLocationClient.lastLocation)
+        fusedLocationClient.lastLocation.addOnSuccessListener { location->
+            if (location != null) {
+                println("It worked")
+                println(location.latitude)
+                println(location.longitude)
+
+            }
+            else{
+                println("It didn't work")
+            }
+
+        }
+
+    }*/
 }
