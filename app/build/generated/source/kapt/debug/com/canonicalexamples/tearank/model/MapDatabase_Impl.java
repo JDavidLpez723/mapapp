@@ -25,19 +25,23 @@ import java.util.Set;
 public final class MapDatabase_Impl extends MapDatabase {
   private volatile NodeDao _nodeDao;
 
+  private volatile UserDao _userDao;
+
   @Override
   protected SupportSQLiteOpenHelper createOpenHelper(DatabaseConfiguration configuration) {
     final SupportSQLiteOpenHelper.Callback _openCallback = new RoomOpenHelper(configuration, new RoomOpenHelper.Delegate(1) {
       @Override
       public void createAllTables(SupportSQLiteDatabase _db) {
         _db.execSQL("CREATE TABLE IF NOT EXISTS `node_table` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `x` REAL NOT NULL, `y` REAL NOT NULL, `tag` TEXT NOT NULL)");
+        _db.execSQL("CREATE TABLE IF NOT EXISTS `user_table` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `email` TEXT NOT NULL, `password` TEXT NOT NULL)");
         _db.execSQL("CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)");
-        _db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '04b8358f16033c4a3a5a76cab7c199d9')");
+        _db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '2d399516233680a503e42bc0e905fc9a')");
       }
 
       @Override
       public void dropAllTables(SupportSQLiteDatabase _db) {
         _db.execSQL("DROP TABLE IF EXISTS `node_table`");
+        _db.execSQL("DROP TABLE IF EXISTS `user_table`");
         if (mCallbacks != null) {
           for (int _i = 0, _size = mCallbacks.size(); _i < _size; _i++) {
             mCallbacks.get(_i).onDestructiveMigration(_db);
@@ -90,9 +94,22 @@ public final class MapDatabase_Impl extends MapDatabase {
                   + " Expected:\n" + _infoNodeTable + "\n"
                   + " Found:\n" + _existingNodeTable);
         }
+        final HashMap<String, TableInfo.Column> _columnsUserTable = new HashMap<String, TableInfo.Column>(3);
+        _columnsUserTable.put("id", new TableInfo.Column("id", "INTEGER", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsUserTable.put("email", new TableInfo.Column("email", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsUserTable.put("password", new TableInfo.Column("password", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        final HashSet<TableInfo.ForeignKey> _foreignKeysUserTable = new HashSet<TableInfo.ForeignKey>(0);
+        final HashSet<TableInfo.Index> _indicesUserTable = new HashSet<TableInfo.Index>(0);
+        final TableInfo _infoUserTable = new TableInfo("user_table", _columnsUserTable, _foreignKeysUserTable, _indicesUserTable);
+        final TableInfo _existingUserTable = TableInfo.read(_db, "user_table");
+        if (! _infoUserTable.equals(_existingUserTable)) {
+          return new RoomOpenHelper.ValidationResult(false, "user_table(com.canonicalexamples.tearank.model.User).\n"
+                  + " Expected:\n" + _infoUserTable + "\n"
+                  + " Found:\n" + _existingUserTable);
+        }
         return new RoomOpenHelper.ValidationResult(true, null);
       }
-    }, "04b8358f16033c4a3a5a76cab7c199d9", "8ea3d8d7f15ba1e745f79da1cbc6ca17");
+    }, "2d399516233680a503e42bc0e905fc9a", "d5b24bbe82b85f00331befa579fcd729");
     final SupportSQLiteOpenHelper.Configuration _sqliteConfig = SupportSQLiteOpenHelper.Configuration.builder(configuration.context)
         .name(configuration.name)
         .callback(_openCallback)
@@ -105,7 +122,7 @@ public final class MapDatabase_Impl extends MapDatabase {
   protected InvalidationTracker createInvalidationTracker() {
     final HashMap<String, String> _shadowTablesMap = new HashMap<String, String>(0);
     HashMap<String, Set<String>> _viewTables = new HashMap<String, Set<String>>(0);
-    return new InvalidationTracker(this, _shadowTablesMap, _viewTables, "node_table");
+    return new InvalidationTracker(this, _shadowTablesMap, _viewTables, "node_table","user_table");
   }
 
   @Override
@@ -115,6 +132,7 @@ public final class MapDatabase_Impl extends MapDatabase {
     try {
       super.beginTransaction();
       _db.execSQL("DELETE FROM `node_table`");
+      _db.execSQL("DELETE FROM `user_table`");
       super.setTransactionSuccessful();
     } finally {
       super.endTransaction();
@@ -135,6 +153,20 @@ public final class MapDatabase_Impl extends MapDatabase {
           _nodeDao = new NodeDao_Impl(this);
         }
         return _nodeDao;
+      }
+    }
+  }
+
+  @Override
+  public UserDao getUserDao() {
+    if (_userDao != null) {
+      return _userDao;
+    } else {
+      synchronized(this) {
+        if(_userDao == null) {
+          _userDao = new UserDao_Impl(this);
+        }
+        return _userDao;
       }
     }
   }

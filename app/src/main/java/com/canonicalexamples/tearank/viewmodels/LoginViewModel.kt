@@ -40,6 +40,7 @@ class LoginViewModel (private val database: MapDatabase): ViewModel() {
         println(passLogin)
     }
 
+
     fun encryptData(data: String): Pair<ByteArray, ByteArray> {
         val cipher: Cipher = Cipher.getInstance("AES/CBC/NoPadding")
 

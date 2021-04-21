@@ -23,9 +23,10 @@ import androidx.room.RoomDatabase
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@Database(entities = [Node::class], version = 1, exportSchema = false)
+@Database(entities = [Node::class, User::class], version = 1, exportSchema = false)
 abstract class MapDatabase: RoomDatabase() {
     abstract val nodeDao: NodeDao
+    abstract val userDao: UserDao
 
     companion object {
         @Volatile

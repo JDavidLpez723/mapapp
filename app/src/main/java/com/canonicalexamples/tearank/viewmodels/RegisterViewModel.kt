@@ -1,11 +1,16 @@
 package com.canonicalexamples.tearank.viewmodels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import android.util.Base64
+import androidx.lifecycle.*
 import com.canonicalexamples.tearank.model.MapDatabase
+import com.canonicalexamples.tearank.model.User
 import com.canonicalexamples.tearank.util.Event
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.security.SecureRandom
+import java.util.*
+import javax.crypto.SecretKeyFactory
+import javax.crypto.spec.PBEKeySpec
 
 class RegisterViewModel (private val database: MapDatabase): ViewModel()  {
     private val _go_to_main_fragment: MutableLiveData<Event<Boolean>> = MutableLiveData()
@@ -22,8 +27,42 @@ class RegisterViewModel (private val database: MapDatabase): ViewModel()  {
     fun getRegister(mail:String, pass:String){
         mailRegister = mail
         passRegister = pass
-        println(mailRegister)
-        println(passRegister)
+
+
+
+        val random = SecureRandom()
+        val salt = ByteArray(256)
+        random.nextBytes(salt)
+
+        val itCount = 12000
+        val pbKeySpec = PBEKeySpec(pass.toCharArray(), salt, itCount, 256*8) // 1
+        val secretKeyFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256") // 2
+        val key = secretKeyFactory.generateSecret(pbKeySpec)
+
+        val result = Base64.encodeToString(key.encoded, Base64.DEFAULT)
+        val saltencoded = Base64.encodeToString(salt, Base64.DEFAULT)
+
+//        println("Result:")
+//        print(result)
+//        println("Salt:")
+//        print(saltencoded)
+
+        viewModelScope.launch (Dispatchers.IO){
+            database.userDao.create(User(email = mail, password = result+":"+saltencoded))
+            val user = database.userDao.get(mail)
+            print(user.toString())
+        }
+
+
+        //print (secretKeyFactory.generateSecret(pbKeySpec))
+//        val keyBytes = secretKeyFactory.generateSecret(pbKeySpec).encoded // 3
+//        val keySpec = SecretKeySpec(keyBytes, "AES") // 4
+
+
+//        val salt: ByteArray
+//        val secRamdom = SecureRandom.getInstance()
+//
+//        secRamdom.nextBytes(salt)
     }
 
 }
