@@ -46,7 +46,7 @@
         android:layout_marginEnd="64dp"
         android:layout_marginBottom="120dp"
         android:text="@string/register"
-        app:backgroundTint="#DF8C73"
+        app:backgroundTint="#15CC9B"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
