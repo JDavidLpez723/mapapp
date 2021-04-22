@@ -77,7 +77,7 @@ class MainFragment : Fragment() {
             viewModel.button1Clicked()
         }
 
-        binding.button2.setOnClickListener {
+        binding.imageButton.setOnClickListener {
             viewModel.button2Clicked()
         }
 
