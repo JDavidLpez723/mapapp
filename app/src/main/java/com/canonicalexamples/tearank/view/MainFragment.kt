@@ -72,7 +72,7 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.button1.setOnClickListener {
+        binding.imageButton3.setOnClickListener {
             viewModel.button1Clicked()
         }
 
@@ -140,95 +140,4 @@ class MainFragment : Fragment() {
             }
         }
     }
-
-    fun getLastKnownLocation() {
-        val app = activity?.application as MapApp
-        when {
-            ContextCompat.checkSelfPermission(app, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED -> {
-                // You can use the API that requires the permission.
-            }
-            else -> {
-                // You can directly ask for the permission.
-                // The registered ActivityResultCallback gets the result of this request.
-                requestPermissionLauncher.launch(
-                    Manifest.permission.ACCESS_FINE_LOCATION)
-            }
-        }
-
-
-        if (ActivityCompat.checkSelfPermission(
-                app,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                app,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            println("It didn't work")
-
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return
-        }
-        fusedLocationClient.lastLocation
-            .addOnSuccessListener { location : Location? ->
-                // Got last known location. In some rare situations this can be null.
-                if (location != null) {
-                    println("It worked")
-                    println(location.latitude)
-                    println(location.longitude)
-
-                }
-                else{
-                    println("It didn't work")
-                }
-            }
-    }
-    /*fun getLastKnownLocation() {
-        fusedLocationClient.lastLocation
-            .addOnSuccessListener { location : Location? ->
-                // Got last known location. In some rare situations this can be null.
-            }
-
-        println("hola")
-        println(fusedLocationClient.lastLocation)
-        val app = activity?.application as MapApp
-        if (ActivityCompat.checkSelfPermission(
-                app.applicationContext,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                app.applicationContext,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            println("Permissions are not granted")
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return
-        }
-        println(fusedLocationClient.lastLocation)
-        fusedLocationClient.lastLocation.addOnSuccessListener { location->
-            if (location != null) {
-                println("It worked")
-                println(location.latitude)
-                println(location.longitude)
-
-            }
-            else{
-                println("It didn't work")
-            }
-
-        }
-
-    }*/
 }
