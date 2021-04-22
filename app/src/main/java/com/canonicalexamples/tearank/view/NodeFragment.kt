@@ -73,8 +73,7 @@ class NodeFragment: Fragment(){
             if(z > 0 ){
                 val builder = this.context?.let { Picasso.Builder(it) }
                 if (builder != null) {
-                    //val uri = "https://api.maptiler.com/maps/basic/256/7/63/42.png?key=w3yoRskFIgZceY3WMSjy"
-                    val uri = viewModel.getTileUri()
+                     val uri = viewModel.getTileUri()
                     builder.build().load(uri)
                         .placeholder(R.drawable.just_grey_light_grey)
                         .error(R.drawable.error)

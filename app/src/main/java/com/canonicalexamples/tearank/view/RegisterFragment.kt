@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import com.canonicalexamples.tearank.R
 import com.canonicalexamples.tearank.app.MapApp
@@ -45,7 +46,6 @@ class RegisterFragment : Fragment() {
 
         binding.RegisterBRegisterFragment.setOnClickListener {
             viewModel.getRegister(binding.mailRegisterFragment.text.toString(),binding.passRegisterFragment.text.toString())
-            viewModel.navigate1()
         }
 
         viewModel.go_to_main_fragment.observeEvent(viewLifecycleOwner) {
@@ -53,6 +53,13 @@ class RegisterFragment : Fragment() {
                 findNavController().navigate(R.id.action_registerFragment_to_MainFragment)
             }
         }
+
+        viewModel.user_already_exists.observeEvent(viewLifecycleOwner) {
+            if (it){
+                Toast.makeText(activity, "Sorry, a username with that email already exists. Try again.", Toast.LENGTH_LONG).show()
+            }
+        }
+
     }
 
 }

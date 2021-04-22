@@ -16,13 +16,13 @@ class RegisterViewModel (private val database: MapDatabase): ViewModel()  {
     private val _go_to_main_fragment: MutableLiveData<Event<Boolean>> = MutableLiveData()
     val go_to_main_fragment: LiveData<Event<Boolean>> = _go_to_main_fragment
 
+    private val _user_already_exists: MutableLiveData<Event<Boolean>> = MutableLiveData()
+    val user_already_exists: LiveData<Event<Boolean>> = _user_already_exists
+
     private lateinit var mailRegister: String
     private lateinit var passRegister: String
 
-    //Goes to Main Fragment
-    fun navigate1(){
-        _go_to_main_fragment.value = Event(true)
-    }
+
 
     fun getRegister(mail:String, pass:String){
         mailRegister = mail
@@ -40,9 +40,18 @@ class RegisterViewModel (private val database: MapDatabase): ViewModel()  {
 
 
         viewModelScope.launch (Dispatchers.IO){
-            database.userDao.create(User(email = mail, password = result.first+":"+result.second))
-            val user = database.userDao.get(mail)
-            print(user.toString())
+            val u = database.userDao.get(mail)
+            if(u!=null){
+                //USER WITH THAT EMAIL ALREADY EXISTS
+                _user_already_exists.postValue(Event(true))
+            }
+            else {
+                //USER WITH THAT EMAIL DONT EXIST
+                database.userDao.create(User(email = mail, password = result.first + ":" + result.second))
+                val user = database.userDao.get(mail)
+                print(user.toString())
+                _go_to_main_fragment.postValue(Event(true))
+            }
         }
 
 
