@@ -57,6 +57,7 @@ class LoginFragment : Fragment() {
             if(it) {
                 //Toast.makeText(this,"Prueba",Toast.LENGTH_SHORT)
                 findNavController().navigate(R.id.action_loginFragment_to_MainFragment)
+                Toast.makeText(activity, "Welcome again!", Toast.LENGTH_LONG).show()
             }
         }
 

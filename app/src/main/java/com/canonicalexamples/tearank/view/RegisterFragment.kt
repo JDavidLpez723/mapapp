@@ -51,12 +51,13 @@ class RegisterFragment : Fragment() {
         viewModel.go_to_main_fragment.observeEvent(viewLifecycleOwner) {
             if (it) {
                 findNavController().navigate(R.id.action_registerFragment_to_MainFragment)
+                Toast.makeText(activity, "Register successful. Welcome to MapApp!", Toast.LENGTH_LONG).show()
             }
         }
 
         viewModel.user_already_exists.observeEvent(viewLifecycleOwner) {
             if (it){
-                Toast.makeText(activity, "Sorry, a username with that email already exists. Try again.", Toast.LENGTH_LONG).show()
+                Toast.makeText(activity, "This email is already associated with an existing account", Toast.LENGTH_LONG).show()
             }
         }
 
